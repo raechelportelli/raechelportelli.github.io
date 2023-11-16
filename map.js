@@ -70,7 +70,7 @@ const config = {
     /**
      * Legend colors and values, ignored if autoLegend is used. Delete both if no legend is needed.
      */
-    legendColors: ["#b57033 ", "#edce9a", "#9caab2", "#4d5860"],
+    legendColors: ["#f8ecec", "#b54f4f", "#a33e3e", "#793434"],
     legendValues: ["-16%", "-8%", "8%", "16%"],
     /**
     /**
