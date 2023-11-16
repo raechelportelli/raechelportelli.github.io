@@ -1,0 +1,59 @@
+#legend {
+  width: 350px;
+}
+
+.c3 .c3-axis-x path,
+.c3-ygrid-line line {
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.c3 .c3-axis-y path,
+.c3 .c3-axis-y line {
+  stroke: black;
+  stroke-width: 20px;
+  fill: none;
+}
+
+.c3 .c3-axis-x path,
+.c3-ygrid-line line {
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.c3 .c3-axis-y path,
+.c3 .c3-axis-y line {
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.data {
+  color: black;
+}
+
+.c3-tooltip-container {
+  color: black;
+  background-color: white;
+}
+
+/* Colors for the bar chart */
+.c3-bar-0 {
+  fill: #26142a !important;
+}
+.c3-bar-1 {
+  fill: #26142a !important;
+}
+.c3-bar-2 {
+  fill: #26142a !important;
+}
+.c3-bar-3 {
+  fill: #26142a !important;
+}
+
+.c3-legend-item-tile {
+  stroke: rgb(38, 20, 43) !important;
+  stroke-width: 10px !important;
+}
