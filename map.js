@@ -6,7 +6,7 @@ const config = {
      * Replace this with your Mapbox Access Token (**Do this first!**)
      */
     accessToken:
-      "pk.eyJ1IjoiY3VybXVkZ2VvbnBoZCIsImEiOiJja3VxNjkxN2k0c2w0MnptbjU0N242cHFzIn0.DI3yxzJz-CO25QvNLXESOQ",
+      "pk.eyJ1IjoiY3VybXVkZ2VvbnBoZCIsImEiOiJjbHAxZXU2dmwwajV6MmxwZzRpdXhobjB2In0.uIuuAtk1EtV7HSbjpUfeOw",
     /**
      * Replace with the url of your map style
      */
@@ -14,7 +14,7 @@ const config = {
     /**
      * The layer within the vector tileset to use for querying
      */
-    sourceLayer: "kabupaten_style",
+    sourceLayer: "kab-8l1bs9",
     /**
      * This sets the title in the sidebar and the <title> tag of the app
      */
