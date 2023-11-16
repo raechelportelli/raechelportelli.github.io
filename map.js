@@ -14,7 +14,7 @@ const config = {
     /**
      * The layer within the vector tileset to use for querying
      */
-    sourceLayer: "kab-8l1bs9",
+    sourceLayer: "kab-8i1bs9",
     /**
      * This sets the title in the sidebar and the <title> tag of the app
      */
@@ -76,7 +76,7 @@ const config = {
     /**
      * The name of your choropleth map layer in studio, used for building a legend
      */
-    studioLayerName: "kab-8l1bs9",
+    studioLayerName: "kab-8i1bs9",
   };
   
   /********************************************************************************
