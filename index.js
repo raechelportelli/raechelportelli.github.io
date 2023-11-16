@@ -10,7 +10,7 @@ const config = {
   /**
    * Replace with the url of your map style
    */
-  mapStyle: "mapbox://styles/curmudgeonphd/ckof3wsww4ig418jrc0eezyjx",
+  mapStyle: "mapbox://styles/curmudgeonphd/clp1afo0h00x901qs215n2ei4",
   /**
    * The layer within the vector tileset to use for querying
    */
