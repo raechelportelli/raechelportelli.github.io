@@ -18,7 +18,11 @@
     <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
 
       <script src="Leaflet.TileLayer.MBTiles.js"></script>  
-  
+    
+<!-- leaflet-elevation -->
+
+<link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
+<script src="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.js"></script>
   </head>
   
   <body>
@@ -39,6 +43,56 @@
       		mb.on('databaseerror', function(ev) {
       			console.info('MBTiles DB error', ev);
       		});
+
+        let opts = {
+        map: {
+            center: [42.75393411362465, -84.46925036588932],
+            zoom: 5,
+            fullscreenControl: false,
+            resizerControl: true,
+            preferCanvas: true,
+            rotate: true,
+            // bearing: 45,
+            rotateControl: {
+                closeOnZeroBearing: true
+            },
+        },
+        elevationControl: {
+            url: "Woodstock.gpx",
+            options: {
+                theme: "lightblue-theme",
+                collapsed: false,
+                autohide: false,
+                autofitBounds: true,
+                position: "bottomleft",
+                detached: true,
+                summary: "inline",
+                imperial: false,
+                // altitude: "disabled",
+                slope: "disabled",
+                speed: false,
+                acceleration: false,
+                time: "summary",
+                legend: true,
+                followMarker: true,
+                almostOver: true,
+                distanceMarkers: false,
+                hotline: false,
+            },
+        },
+        layersControl: {
+            options: {
+                collapsed: false,
+            },
+        },
+    };
+   
+    let controlElevation = L.control.elevation(opts.elevationControl.options).addTo(map);
+    let controlLayer = L.control.layers(null, null, opts.layersControl.options);
+
+    controlElevation.on('eledata_loaded', ({layer, name}) => controlLayer.addTo(map) && layer.eachLayer((trkseg) => trkseg.feature.geometry.type != "Point" && controlLayer.addOverlay(trkseg, trkseg.feature && trkseg.feature.properties && trkseg.feature.properties.name || name)));
+
+    controlElevation.load(opts.elevationControl.url);
 
               
       	</script>
