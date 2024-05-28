@@ -3,42 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-    
-    <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
-    <script src="Leaflet.TileLayer.MBTiles.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
 
-    <style>
-      html, body {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-      }
-      #map {
-        /* configure the size of the map */
-        width: 100%;
-        height: 100%;
-      }
-    </style>
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
   </head>
   <body>
-    <div id="map"></div>
+     <div id="map" #map { height: 180px; }></div>
     
-    <script>
-      // initialize Leaflet
-    
-
-    
- 
-    var map = L.map('map').setView({lon: -83.99337, lat: 42.41661}, 12);
-
-    var mb = L.tileLayer.mbTiles('tiles20.mbtiles').addTo(map);
-      
-      // show the scale bar on the lower left corner
-      L.control.scale({imperial: true, metric: true}).addTo(map);
-
-    </script>
   </body>
-</html>
