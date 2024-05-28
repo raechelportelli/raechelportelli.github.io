@@ -1,128 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
+    <script src="https://unpkg.com/leaflet.tilelayer.mbtiles@latest/Leaflet.TileLayer.MBTiles.js"></script>
 
+    <style>
+      html, body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      #map {
+        /* configure the size of the map */
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      // initialize Leaflet
+    
 
-<!DOCTYPE html>
-<html>
+    var mb = L.tileLayer.mbTiles('test_tiles.mbtiles').addTo(map);
+ 
+    var map = L.map('map').setView({lon: -83.99337, lat: 42.41661}, 2);
 
-<head>
+      // show the scale bar on the lower left corner
+      L.control.scale({imperial: true, metric: true}).addTo(map);
 
-<style> html, body, #map, #elevation-div { height: 100%; width: 100%; padding: 0; margin: 0; } #map { height: 75%; } #elevation-div {	height: 25%; font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif; } </style>
-
-<!-- leaflet-ui -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet-ui@0.6.0/dist/leaflet-ui.js"></script>
-
-<!-- leaflet-elevation -->
-<link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
-<script src="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.js"></script>
-
-</head>
-
-<body>
-
-	<div id="map" class="leaflet-map"></div>
-
-	<script>
-		let opts = {
-			map: {
-				center: [42.75317782815344, -84.46616046122533],
-				zoom: 5,
-				fullscreenControl: false,
-				resizerControl: true,
-				preferCanvas: true,
-				rotate: true,
-				// bearing: 45,
-				rotateControl: {
-					closeOnZeroBearing: true
-				},
-			},
-			elevationControl: {
-				url: "Evening_Run.gpx",
-				options: {
-					theme: "lightblue-theme",
-					collapsed: false,
-					autohide: false,
-					autofitBounds: true,
-					position: "bottomleft",
-					detached: true,
-					summary: "inline",
-					imperial: false,
-					// altitude: "disabled",
-					slope: "disabled",
-					speed: false,
-					acceleration: false,
-					time: "summary",
-					legend: true,
-					followMarker: true,
-					almostOver: true,
-					distanceMarkers: false,
-					hotline: false,
-				},
-			},
-			layersControl: {
-				options: {
-					collapsed: false,
-				},
-			},
-		};
-
-		let map = L.map('map', opts.map);
-
-		let controlElevation = L.control.elevation(opts.elevationControl.options).addTo(map);
-		let controlLayer = L.control.layers(null, null, opts.layersControl.options);
-
-		controlElevation.on('eledata_loaded', ({layer, name}) => controlLayer.addTo(map) && layer.eachLayer((trkseg) => trkseg.feature.geometry.type != "Point" && controlLayer.addOverlay(trkseg, trkseg.feature && trkseg.feature.properties && trkseg.feature.properties.name || name)));
-
-		controlElevation.load(opts.elevationControl.url);
-	</script>
-
-	<!-- i18n -->
-	<script>
-
-		// Register a custom locale
-		L.registerLocale('en:18', {
-			"Acceleration"      : "Acceleration",
-			"Altitude"          : "Elevation",
-			"Slope"             : "Slope",
-			"Speed"             : "Velocity",
-			"Total Length: "    : "L: ",
-			"Max Elevation: "   : "E Max: ",
-			"Min Elevation: "   : "E Min: ",
-			"Avg Elevation: "   : "E Avg: ",
-			"Total Time: "      : "T: ",
-			"Total Ascent: "    : "Asc: ",
-			"Total Descent: "   : "Desc: ",
-			"Min Slope: "       : "S Min: ",
-			"Max Slope: "       : "S Max: ",
-			"Avg Slope: "       : "S Avg: ",
-			"Min Speed: "       : "V Min: ",
-			"Max Speed: "       : "V Max: ",
-			"Avg Speed: "       : "V Avg: ",
-			"Min Acceleration: ": "A Min: ",
-			"Max Acceleration: ": "A Max: ",
-			"Avg Acceleration: ": "A Avg: ",
-		});
-
-		// Enable a custom locale
-		// L.setLocale('en:18');
-
-		// You can also override a previously defined object
-		L.locales['en'] = L.extend({
-			"y: "               : "",
-			"x: "               : "",
-			"t: "               : "",
-			"T: "               : "",
-			"m: "               : "",
-			"v: "               : "",
-			"a: "               : "",
-		}, L.locales['en']);
-
-		// Switch the language
-		L.setLocale('en');
-
-	</script>
-
-	<a href="https://github.com/Raruto/leaflet-elevation" class="view-on-github" style="position: fixed;top: 30px;left: calc(50% - 81px);z-index: 9999;"> <img alt="View on Github" src="https://raruto.github.io/img/view-on-github.png" title="View on Github" width="163"> </a>
-
-</body>
-
+      // show a marker on the map
+      L.marker({lon: 0, lat: 0}).bindPopup('The center of the world').addTo(map);
+    </script>
+  </body>
 </html>
