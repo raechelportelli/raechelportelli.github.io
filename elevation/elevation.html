@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    
     <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
     <script src="Leaflet.TileLayer.MBTiles.js"></script>
 
@@ -23,14 +25,17 @@
   </head>
   <body>
     <div id="map"></div>
+    
     <script>
       // initialize Leaflet
     
 
-    var mb = L.tileLayer.mbTiles('tiles20.mbtiles').addTo(map);
+    
  
-    var map = L.map('map').setView({lon: -83.99337, lat: 42.41661}, 2);
+    var map = L.map('map').setView({lon: -83.99337, lat: 42.41661}, 12);
 
+    var mb = L.tileLayer.mbTiles('tiles20.mbtiles').addTo(map);
+      
       // show the scale bar on the lower left corner
       L.control.scale({imperial: true, metric: true}).addTo(map);
 
