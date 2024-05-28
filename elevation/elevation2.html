@@ -29,6 +29,11 @@
 <div id="map" class="leaflet-map">
 
 <script>
+
+        let mb = L.tileLayer.mbTiles('tiles20.mbtiles', {
+        minZoom: 12,
+        maxZoom: 12
+        }).addTo(map);
      let opts = {
         map: {
             center: [42.75393411362465, -84.46925036588932],
@@ -71,12 +76,7 @@
             },
         },
     };
-
-    let mb = L.tileLayer.mbTiles('tiles20.mbtiles', {
-        minZoom: 12,
-        maxZoom: 12
-    }).addTo(map);
-    
+   
     let map = L.map('map', opts.map);
 
    let controlElevation = L.control.elevation(opts.elevationControl.options).addTo(map);
