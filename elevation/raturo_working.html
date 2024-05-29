@@ -5,8 +5,6 @@
 	<title>leaflet-elevation.js</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<link rel="dns-prefetch" href="https://tile.opentopomap.org">
-	<link rel="dns-prefetch preconnect" href="https://unpkg.com" />
 	<link rel="preload" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" as="script">
 	<link rel="preload" href="https://unpkg.com/leaflet-ui@0.6.0/dist/leaflet-ui.js" as="script">
 	
@@ -29,14 +27,25 @@
 	<div id="map" class="leaflet-map"></div>
 
 	<script>
+		 var map = L.map('map').setView([42.42263,-83.98761], 12);
+      	
+      		var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
+      			minZoom: 5,
+      			maxZoom: 12
+      		}).addTo(map);
+      	
+      		mb.on('databaseloaded', function(ev) {
+      			console.info('MBTiles DB loaded', ev);
+      		});
+      		mb.on('databaseerror', function(ev) {
+      			console.info('MBTiles DB error', ev);
+      		});
+		
 		let opts = {
 			map: {
 				center: [42.75393411362465, -84.46925036588932],
-				zoom: 5,
-				mapTypeId: 'topo',
-				fullscreenControl: false,
-				searchControl: false,
-				loadingControl: false,
+				minZoom: 5,
+				maxZoom: 12
 				plugins: [
 					"d3@7.8.4/dist/d3.min.js",
 					"@tmcw/togeojson@5.6.2/dist/togeojson.umd.js",
