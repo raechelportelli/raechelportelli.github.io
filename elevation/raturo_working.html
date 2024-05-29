@@ -104,20 +104,8 @@
 
 			routes.addTo(map);
 
-			var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
-      			minZoom: 5,
-      			maxZoom: 12
-      		}).addTo(map);
-      	
-      		mb.on('databaseloaded', function(ev) {
-      			console.info('MBTiles DB loaded', ev);
-      		});
-      		mb.on('databaseerror', function(ev) {
-      			console.info('MBTiles DB error', ev);
-      		});
-
-			map.attributionControl.addAttribution('Map Data: &copy; <a href="https://github.com/adoroszlai">Attila Doroszlai</a> (<a href="https://github.com/adoroszlai/joebed/blob/gh-pages/LICENSE.md">MIT License</a>)');
-
+			
+		
 		});
 
 	</script>
