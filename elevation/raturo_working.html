@@ -82,21 +82,20 @@
 
 		let map = L.map('map', opts.map);
 
+		let routes;
+
 		map.on('plugins_loaded', function(e) {
 
-				let routes;
-				routes.addTo(map);
-				});
-				
-routes = L.gpxGroup(tracks, {
-	//points: points,
-	//points_options: opts.points,
-	elevation: true,
-	elevation_options: opts.elevation,
-	legend: false,
-	distanceMarkers: true,
-});
+			routes = L.gpxGroup(tracks, {
+				points: points,
+				points_options: opts.points,
+				elevation: true,
+				elevation_options: opts.elevation,
+				legend: false,
+				distanceMarkers: true,
+			});
 
+			routes.addTo(map);
 
 
 
