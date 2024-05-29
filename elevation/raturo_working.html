@@ -27,7 +27,7 @@
 	<div id="map" class="leaflet-map"></div>
 
 	<script>
-		 var map = L.map('map').setView([42.42263,-83.98761], 12);
+		//var map = L.map('map').setView([42.42263,-83.98761], 12);
       	
       		var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
       			minZoom: 5,
@@ -91,7 +91,7 @@
 			
 		];
 
-		//let map = L.map('map', opts.map);
+		let map = L.map('map', opts.map);
 
 		let routes;
 
