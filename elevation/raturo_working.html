@@ -42,8 +42,6 @@
 
 	<script>
 
-		var map = L.map('map').setView([42.42263,-83.98761], 12);		
-
 		let opts = {
 			map: {
 				center: [42.75393411362465, -84.46925036588932],
@@ -89,6 +87,8 @@
 
 		let map = L.map('map', opts.map);
 
+
+
 		let routes;
 
 		map.on('plugins_loaded', function(e) {
@@ -103,6 +103,18 @@
 			});
 
 			routes.addTo(map);
+
+			var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
+      			minZoom: 5,
+      			maxZoom: 12
+      		}).addTo(map);
+      	
+      		mb.on('databaseloaded', function(ev) {
+      			console.info('MBTiles DB loaded', ev);
+      		});
+      		mb.on('databaseerror', function(ev) {
+      			console.info('MBTiles DB error', ev);
+      		});
 
 			map.attributionControl.addAttribution('Map Data: &copy; <a href="https://github.com/adoroszlai">Attila Doroszlai</a> (<a href="https://github.com/adoroszlai/joebed/blob/gh-pages/LICENSE.md">MIT License</a>)');
 
