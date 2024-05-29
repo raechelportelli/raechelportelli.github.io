@@ -1,103 +1,121 @@
 <!DOCTYPE html>
 <html>
-
+<!--V5-->
 <head>
-    <!--V4-->
-    <!-- basic leaflet -->-->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>leaflet-elevation.js</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<link rel="dns-prefetch" href="https://tile.opentopomap.org">
+	<link rel="dns-prefetch preconnect" href="https://unpkg.com" />
+	<link rel="preload" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" as="script">
+	<link rel="preload" href="https://unpkg.com/leaflet-ui@0.6.0/dist/leaflet-ui.js" as="script">
+	
+	<style>@import '../libs/fullpage.css';</style>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <link rel="stylesheet" href="Style.css">
+	<!-- leaflet-ui -->
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet-ui@0.6.0/dist/leaflet-ui.js"></script>
 
-    <!--MBTILES-->
-    <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
-    <script src="Leaflet.TileLayer.MBTiles.js"></script>
+	<style>
+		.leaflet-tooltip {
+			font-weight: 700;
+		}
+	</style>
 
-    <!--ELEVATION RATURO-->
-    <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
-    <script src="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.js"></script>
-
-    <style>
-        .leaflet-tooltip {
-            font-weight: 700;
-        }
-        #map {
-            height: 600px;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="map" class="leaflet-map"></div>
 
-    <script>
-            let opts = {
-                map: {
-                    center: [42.75393411362465, -84.46925036588932],
-                    minZoom: 5,
-                    maxZoom: 12,
-                    plugins: ["leaflet-distance-marker.css",
-                    "leaflet-distance-marker.js",
-                    "leaflet-elevation.min.css",
-                    "leaflet-elevation.min.js",
-                    "leaflet-gpxgroup.js",
-                    ]
-                },
-                points: {
-                    icon: {
-                        iconUrl: 'https://unpkg.com/@raruto/leaflet-elevation@1.3.5/images/elevation-poi.png',
-                        iconSize: [12, 12],
-                    },
-                },
-                elevation: {
-                    theme: "lime-theme",
-                    detached: true,
-                    collapsed: false,
-                    autohide: false,
-                    width: 600,
-                    edgeScale: false,
-                },
-            };
+	<div id="map" class="leaflet-map"></div>
 
-            let tracks = [
-                "Woodstock.gpx",
-                "100M_50M.gpx",
-            ];
+	<script>
+		let opts = {
+			map: {
+				center: [41.4583, 12.7059],
+				zoom: 5,
+				mapTypeId: 'topo',
+				fullscreenControl: false,
+				searchControl: false,
+				loadingControl: false,
+				plugins: [
+					"d3@7.8.4/dist/d3.min.js",
+					"@tmcw/togeojson@5.6.2/dist/togeojson.umd.js",
+					"leaflet-geometryutil@0.9.3/src/leaflet.geometryutil.js",
+					"leaflet-almostover@1.0.1/src/leaflet.almostover.js",
+					"leaflet-distance-marker.css",
+					"leaflet-distance-marker.js",
+					"leaflet-elevation.css",
+					"leaflet-elevation.js",
+					"leaflet-gpxgroup.min.js",
+				],
+			},
+			points: {
+				icon: {
+					iconUrl: 'https://unpkg.com/@raruto/leaflet-elevation@1.3.5/images/elevation-poi.png',
+					iconSize: [12, 12],
+				},
+			},
+			elevation: {
+				theme: "lime-theme",
+				detached: false,
+				collapsed: false,
+				autohide: false,
+				width: 500,
+				edgeScale: false,
+			},
+		};
 
-            var map = L.map('map').setView([42.42263, -83.98761], 12);
+		let tracks = [
+			"Woodstock.gpx",
+			"100M_50M.gpx",
 
-            L.GpxGroup(tracks, {
-                points: [],
-                points_options: opts.points,
-                elevation: true,
-                elevation_options: opts.elevation,
-                legend: false,
-                distanceMarkers: true,
-            }).addTo(map);
+		];
 
+		let points = [
+			{latlng:[47.5854438, 18.8260240], name:"Éles-kő"},
+			{latlng:[47.5838863, 18.8235221], name:"Ilona-lak"},
+			{latlng:[47.5689002, 18.8909285], name:"Bronz-barlang"},
+			{latlng:[47.5574055, 18.8954788], name:"Karády-lak"},
+			{latlng:[47.5860042, 18.8590258], name:"Kereszt a Kutya-hegyi kőfejtőnél"},
+			{latlng:[47.5946092, 18.8383717], name:"Kutya-hegyi zsomboly"},
+			{latlng:[47.5852204, 18.8420916], name:"vaditató"},
+			{latlng:[47.5675421, 18.8644739], name:"mészégető"},
+			{latlng:[47.5568284, 18.8683407], name:"festékégető"},
+			{latlng:[47.5627022, 18.8804863], name:"festékégető"},
+			{latlng:[47.5825126, 18.8512647], name:"kőfejtő"},
+			{latlng:[47.5966170, 18.8405121], name:"barlang"},
+			{latlng:[47.5692769, 18.9233352], name:"vaslelőhely"},
+			{latlng:[47.5609284, 18.9319601], name:"Hét-lyuk zsomboly"},
+			{latlng:[47.5532424, 18.8973270], name:"festékégető"},
+			{latlng:[47.5372269, 18.8914775], name:"katonasírok"},
+			{latlng:[47.5934486, 18.8812427], name:"Fülkés-kő"},
+		];
 
-            var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
-                minZoom: 5,
-                maxZoom: 12
-            }).addTo(map);
+		let map = L.map('map', opts.map);
 
-            mb.on('databaseloaded', function (ev) {
-                console.info('MBTiles DB loaded', ev);
-            });
+		let routes;
 
-            mb.on('databaseerror', function (ev) {
-                console.info('MBTiles DB error', ev);
-            });
+		map.on('plugins_loaded', function(e) {
 
-    </script>
+			routes = L.gpxGroup(tracks, {
+				points: points,
+				points_options: opts.points,
+				elevation: true,
+				elevation_options: opts.elevation,
+				legend: false,
+				distanceMarkers: true,
+			});
 
-    <a href="https://github.com/Raruto/leaflet-elevation" class="view-on-github" style="position: fixed;bottom: 10px;left: calc(50% - 60px);z-index: 9999;">
-        <img alt="View on Github" src="https://raruto.github.io/img/view-on-github.png" title="View on Github" width="163">
-    </a>
+			routes.addTo(map);
+
+			map.attributionControl.addAttribution('Map Data: &copy; <a href="https://github.com/adoroszlai">Attila Doroszlai</a> (<a href="https://github.com/adoroszlai/joebed/blob/gh-pages/LICENSE.md">MIT License</a>)');
+
+		});
+
+	</script>
+
+	<a href="https://github.com/Raruto/leaflet-elevation" class="view-on-github" style="position: fixed;bottom: 10px;left: calc(50% - 60px);z-index: 9999;"> <img alt="View on Github" src="https://raruto.github.io/img/view-on-github.png" title="View on Github" width="163"> </a>
+
 </body>
 
 </html>
