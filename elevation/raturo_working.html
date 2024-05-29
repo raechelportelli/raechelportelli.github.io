@@ -38,11 +38,7 @@
 
 	<script>
 
-      	
-		  var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
-			  minZoom: 5,
-			  maxZoom: 12
-		  }).addTo(map);
+
 	  
 		  mb.on('databaseloaded', function(ev) {
 			  console.info('MBTiles DB loaded', ev);
@@ -99,6 +95,12 @@
 
 		let routes;
 
+		      	
+		var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
+			  minZoom: 5,
+			  maxZoom: 12
+		  });
+
 		map.on('plugins_loaded', function(e) {
 
 			routes = L.gpxGroup(tracks, {
@@ -111,6 +113,9 @@
 			});
 
 			routes.addTo(map);
+
+			mb.addTo(map);
+
 
 		});
 
