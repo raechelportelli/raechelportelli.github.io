@@ -38,6 +38,19 @@
 
 	<script>
 
+      	
+		  var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
+			  minZoom: 5,
+			  maxZoom: 12
+		  }).addTo(map);
+	  
+		  mb.on('databaseloaded', function(ev) {
+			  console.info('MBTiles DB loaded', ev);
+		  });
+		  mb.on('databaseerror', function(ev) {
+			  console.info('MBTiles DB error', ev);
+		  });
+
 		let opts = {
 			map: {
 				center: [42.416768,-84.001031],
@@ -100,6 +113,8 @@
 			routes.addTo(map);
 
 		});
+
+
 
 	</script>
 
