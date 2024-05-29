@@ -84,7 +84,7 @@
 
 		let map = L.map('map', opts.map);
 
-		let routes;
+		
 	      	
 		var mb = L.tileLayer.mbTiles('tiles20.mbtiles', {
 			  minZoom: 5,
@@ -98,6 +98,8 @@
 			  console.info('MBTiles DB error', ev);
 		  });
 
+		  let routes;
+		  
 		map.on('plugins_loaded', function(e) {
 
 			routes = L.gpxGroup(tracks, {
