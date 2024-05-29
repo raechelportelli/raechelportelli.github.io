@@ -2,15 +2,24 @@
 <html>
 
 <head>
+    <!-- bsic leaflet -->-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="Style.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!--MBTILES-->
     <script src="https://unpkg.com/sql.js@0.3.2/js/sql.js"></script>
     <script src="Leaflet.TileLayer.MBTiles.js"></script>
+
+    <!--ELEVATION RATURO-->
     <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
     <script src="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.js"></script>
+
     <style>
         .leaflet-tooltip {
             font-weight: 700;
@@ -55,8 +64,6 @@
 
             var map = L.map('map').setView([42.42263, -83.98761], 12);
 
-
-
             L.gpxGroup(tracks, {
                 points: [],
                 points_options: opts.points,
@@ -79,7 +86,7 @@
             mb.on('databaseerror', function (ev) {
                 console.info('MBTiles DB error', ev);
             });
-            
+
             map.attributionControl.addAttribution('Map Data: &copy; <a href="https://github.com/adoroszlai">Attila Doroszlai</a> (<a href="https://github.com/adoroszlai/joebed/blob/gh-pages/LICENSE.md">MIT License</a>)');
         });
     </script>
