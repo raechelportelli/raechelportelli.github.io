@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<!-- see https://raruto.github.io/leaflet-elevation/examples/leaflet-elevation_hoverable-tracks.html>
+<!-- v1-->
 <html lang="en">
   <head>
     <!-- basic leaflet code-->
@@ -58,6 +58,19 @@
                 closeOnZeroBearing: true
             },
         },
+
+        points: {
+          icon: {
+            iconUrl: 'https://unpkg.com/@raturo/leaflet-elevation@1.3.5/images/elevation-poi.png'
+              iconSize: [12,12],
+          },
+          },
+
+          let tracks = ["100M_50M.gpx",
+                        "Woodstock.gpx"];
+
+              let points = ["aidstations.geojson"];
+              
         elevationControl: {
             url: "Woodstock.gpx",
             options: {
