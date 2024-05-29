@@ -51,7 +51,6 @@
 				loadingControl: false,
 				plugins: [
 				"d3@7.8.4/dist/d3.min.js",
-					"@tmcw/togeojson@5.6.2/dist/togeojson.umd.js",
 					"leaflet-geometryutil@0.9.3/src/leaflet.geometryutil.js",
 					"leaflet-almostover@1.0.1/src/leaflet.almostover.js",
 					"@raruto/leaflet-elevation@2.5.1/libs/leaflet-distance-marker.css",
@@ -88,14 +87,18 @@
 
 		let map = L.map('map', opts.map);
 
-
-
 		let routes;
-
-		      	
+	      	
 		var mb = L.tileLayer.mbTiles('test_multilayer.mbtiles', {
 			  minZoom: 5,
 			  maxZoom: 12
+		  });
+
+		mb.on('databaseloaded', function(ev) {
+			  console.info('MBTiles DB loaded', ev);
+		  });
+		mb.on('databaseerror', function(ev) {
+			  console.info('MBTiles DB error', ev);
 		  });
 
 		map.on('plugins_loaded', function(e) {
