@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <!--V2-->
+    <!--V3-->
     <!-- basic leaflet -->-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +40,12 @@
                     center: [42.75393411362465, -84.46925036588932],
                     minZoom: 5,
                     maxZoom: 12,
+                    plugins: ["leaflet-distance-marker.css",
+                    "leaflet-distance-marker.js",
+                    "leaflet-elevation.min.css",
+                    "leaflet-elevation.min.js",
+                    "leaflet-gpxgroup.js",
+                    ]
                 },
                 points: {
                     icon: {
@@ -62,7 +68,7 @@
                 "100M_50M.gpx",
             ];
 
-            //var map = L.map('map').setView([42.42263, -83.98761], 12);
+            var map = L.map('map').setView([42.42263, -83.98761], 12);
 
             L.gpxGroup(tracks, {
                 points: [],
