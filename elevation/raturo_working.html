@@ -3,7 +3,7 @@
 
 <head>
     <!--V1-->
-    <!-- bsic leaflet -->-->
+    <!-- basic leaflet -->-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -35,7 +35,6 @@
     <div id="map" class="leaflet-map"></div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
             let opts = {
                 map: {
                     center: [42.75393411362465, -84.46925036588932],
@@ -88,8 +87,6 @@
                 console.info('MBTiles DB error', ev);
             });
 
-            map.attributionControl.addAttribution('Map Data: &copy; <a href="https://github.com/adoroszlai">Attila Doroszlai</a> (<a href="https://github.com/adoroszlai/joebed/blob/gh-pages/LICENSE.md">MIT License</a>)');
-        });
     </script>
 
     <a href="https://github.com/Raruto/leaflet-elevation" class="view-on-github" style="position: fixed;bottom: 10px;left: calc(50% - 60px);z-index: 9999;">
