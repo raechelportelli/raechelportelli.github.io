@@ -84,6 +84,10 @@
 
 		map.on('plugins_loaded', function(e) {
 
+				let routes;
+				routes.addTo(map);
+				});
+				
 routes = L.gpxGroup(tracks, {
 	//points: points,
 	//points_options: opts.points,
@@ -94,12 +98,6 @@ routes = L.gpxGroup(tracks, {
 });
 
 
-let routes;
-routes.addTo(map);
-
-
-
-});
 
 
 		
