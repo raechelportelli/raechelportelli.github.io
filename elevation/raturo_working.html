@@ -25,6 +25,9 @@ r: <!DOCTYPE html>
 <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
 <script src="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.js"></script>
 
+<!-- D3 -->
+<script src="https://unpkg.com/d3@7.8.4/dist/d3.min.js"></script>
+
 	<style>
 		.leaflet-tooltip {
 			font-weight: 700;
@@ -45,8 +48,8 @@ r: <!DOCTYPE html>
 				fullscreenControl: false,
 				searchControl: false,
 				loadingControl: false,
+				preferCanvas: true,
 				plugins: [
-					"d3@7.8.4/dist/d3.min.js",
 					"@tmcw/togeojson@5.6.2/dist/togeojson.umd.js",
 					"leaflet-geometryutil@0.9.3/src/leaflet.geometryutil.js",
 					"leaflet-almostover@1.0.1/src/leaflet.almostover.js",
@@ -77,9 +80,9 @@ r: <!DOCTYPE html>
 
 		];
 
-		let points = [
+		//let points = [
 
-		];
+		//];
 
 		let map = L.map('map', opts.map);
 
@@ -88,8 +91,8 @@ r: <!DOCTYPE html>
 		map.on('plugins_loaded', function(e) {
 
 			routes = L.gpxGroup(tracks, {
-				points: points,
-				points_options: opts.points,
+				//points: points,
+				//points_options: opts.points,
 				elevation: true,
 				elevation_options: opts.elevation,
 				legend: false,
