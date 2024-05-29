@@ -111,6 +111,8 @@
 			  console.info('MBTiles DB error', ev);
 		  });
 
+		  map.addLayer(mb); 
+
 		  let routes;
 
 		map.on('plugins_loaded', function(e) {
@@ -124,13 +126,7 @@
 				distanceMarkers: true,
 			});
 
-			mb.addTo(map);
-
-
 			routes.addTo(map);
-
-
-			
 
 		});
 
