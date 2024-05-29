@@ -38,7 +38,7 @@
 
 	<script>
 
-	let map = L.map('map', opts.map);
+	
 
 		let opts = {
 			map: {
@@ -95,10 +95,10 @@
 
 		let points = [{latlng: [42.41812,-84.00518], name: "TEST"},
 	];
-
-
+	
+	
+		let map = L.map('map', opts.map); 	
 		
-	      	
 		var mb = L.tileLayer.mbTiles('tiles20.mbtiles', {
 			  minZoom: 5,
 			  maxZoom: 12
