@@ -99,7 +99,7 @@
 		  });
 
 		  let routes;
-		  
+
 		map.on('plugins_loaded', function(e) {
 
 			routes = L.gpxGroup(tracks, {
@@ -111,10 +111,12 @@
 				distanceMarkers: true,
 			});
 
-			routes.addTo(map);
-
 			mb.addTo(map);
 
+
+			routes.addTo(map);
+
+			
 
 		});
 
