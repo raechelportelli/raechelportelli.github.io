@@ -8,20 +8,21 @@
 
 #intro1 {
     height: 20%;
-    width: 100%;
+    max-width: 100%;
     vertical-align: top;
 }
 
 
 #map {
     height: 60%;
-    width: 75%;
+    max-width: 75%;
     vertical-align: middle;
+    align-items: bottom;
 }
 
 #end {
     width: 100%;
-    height: 20%;
+    max-height: 20%;
     vertical-align: bottom;
 }
 
