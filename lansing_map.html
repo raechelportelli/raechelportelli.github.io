@@ -12,7 +12,16 @@ body { margin: 0; padding: 0; }
 </style>
 </head>
 <body>
-<div id="map"></div>
+    <div id = "exterior"> ##div for overall containment
+        <div id ="intro"></div> ##div for intro material
+        <div id="map"></div> ## div for map 
+        <div id = "end"></div> ##div for end material
+</div>
+
+
+
+
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiY3VybXVkZ2VvbnBoZCIsImEiOiJjbHAxZXU2dmwwajV6MmxwZzRpdXhobjB2In0.uIuuAtk1EtV7HSbjpUfeOw';
     const map = new mapboxgl.Map({
