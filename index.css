@@ -23,7 +23,7 @@ p {
 span {
     color:rgb(255, 254, 254);
     font-size: 50px;
-    font-family: "Montserrat", serif;
+    font-family: "Open Sans", serif;
     font-optical-sizing: auto;
     font-weight: <weight>;
     font-style: normal;
@@ -46,7 +46,9 @@ span {
 .column_left h1{
     color: rgb(85, 87, 76);
     font-size: 60px;
-
+    font-family: "Prompt", serif;
+    font-weight: 800;
+    font-style: normal;
 }
 
 
@@ -91,7 +93,7 @@ span {
   column-gap: 1rem;
   cursor: pointer;
   display: flex;
-  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: "Open Sans";
   font-size: 100%;
   font-weight: 700;
   line-height: 24px;
