@@ -37,3 +37,7 @@ p {
     font-style: normal;
     flood-color: aqua;
   }
+
+#map {
+    height: 300px;
+}
