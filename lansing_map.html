@@ -37,8 +37,10 @@
         style: 'mapbox://styles/curmudgeonphd/cm3hhva90001k01qt8jmd2e6g', //style information from mapbox
         center: [-84.510580, 42.726466], // starting position [lng, lat]. Note that lat must be set between -90 and 90
         zoom:9, // starting zoom
-        cooperativeGestures: true //add zoom gestures
+        cooperativeGestures: true //add zoom gestures   
     });
+
+    map.addControl(new mapboxgl.NavigationControl()); // Add zoom and rotation controls to the map.
 </script>
 
 </body>
