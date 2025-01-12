@@ -57,3 +57,28 @@ span {
 @media screen and (max-width: 1100px) {
     .hero_section
 }
+
+a:link {
+    color: rgb(10, 81, 10);
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: rgb(101, 161, 93);
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: rgb(110, 23, 23);
+    font-style: italic;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  
+  a:active {
+    color: rgb(1, 45, 9);
+    background-color: transparent;
+    text-decoration: underline;
+  }
