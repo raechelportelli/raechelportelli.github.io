@@ -12,29 +12,9 @@ h2 {
 p {
     font-family: "Wix Madefor Display", serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
     font-style: normal;
   }
 
-body {
-    max-width: fit-content;
-    max-height: fit-content;
-
-}
-
-#intro1 {
-    z-index: 1;
-}
-
-
-#map {
-    z-index: -1;
-    height: 60%;
-    max-width: 75%;
-
-}
-
-#end {
-    z-index: 1;
-}
-
+.container { padding: 0; margin: 0; display: flex; }
+.left { flex: 2; }
+.right { flex: 1; background-color: red;}
