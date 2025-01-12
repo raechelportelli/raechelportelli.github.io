@@ -103,9 +103,6 @@ p {
     border-radius: 8px;
 }
 
-footer {
-    min-height: 100px;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -133,7 +130,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 20px 16px;
-    background-color: #95aab6;
+    background-color: #747a7e;
   }
   
   .footer-container a {
@@ -143,7 +140,7 @@ footer {
     font-weight: bold;
     
     &:hover {
-      color: #45405f;
+      color: #363636;
     }
   }
   
