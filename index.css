@@ -17,6 +17,7 @@ span {
 }
 
 .hero_wrapper {
+    background: rgb(232, 228, 161);
     display: grid;
     grid-template-columns:1fr 1fr;
     grid-template-rows: 820px;
