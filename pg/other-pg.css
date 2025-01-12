@@ -87,6 +87,13 @@ ul {
     font-variation-settings: "wdth" 100;
 }
 
+p {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
 
 .text-section {
     padding: 20px;
