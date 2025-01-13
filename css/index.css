@@ -54,8 +54,9 @@ span {
 
 .column_left p {
     font-size: 16px;
+    font-family: "Prompt", serif;
     line-height: 2.3;
-    color: rgb(85, 87, 76);
+    color: rgb(39, 46, 8);
 }
 
 .column_right {
@@ -65,53 +66,54 @@ span {
     align-items: center;
 }
 
-.nav{
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    font-family: "Open Sans";
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    color: rgb(33, 35, 21);
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav{    
     display: flex;
     flex-direction:row;
-    height: fit-content;
+    height: fit-content;}
+
+.nav-links {
+    font-family: "Open Sans";
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
 
 }
 
-.nav-but{
-    height: 40px;
-    width: 100%;
-    color: rgb(85, 87, 76);
-    background-color: rgb(232, 228, 161);
-    outline-style: none;
+.nav-links a {
+    text-decoration: none;
+    font-family: "Open Sans";
+    font-weight: 700;
+    color: white;
+    font-size: 1rem;
+    transition: color 0.3s;
 }
 
-/* CSS */
-.nav-but {
-  appearance: button;
-  background-color:rgb(232, 228, 161);
-  background-image: linear-gradient(to bottom, rgb(232, 228, 161), #f8eedb);
-  border: 0 solid #e5e7eb;
-  align-self: auto;
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: rgb(85, 87, 76);
-  column-gap: 1rem;
-  cursor: pointer;
-  display: flex;
-  font-family: "Open Sans";
-  font-size: 100%;
-  font-weight: 700;
-  line-height: 24px;
-  margin: 0;
-  outline: 2px solid transparent;
-  padding: 1rem 1.5rem;
-  text-align: center;
-  text-transform: none;
-  transition: all .1s cubic-bezier(.4, 0, .2, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  box-shadow: -6px 8px 10px rgba(81,41,10,0.1),0px 2px 2px rgba(81,41,10,0.2);
-  font-family: "Montserrat", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+.nav-links a:hover {
+    color: #f0a500;
 }
+
 
 span{
     color: rgb(119, 122, 103);
@@ -134,7 +136,7 @@ span{
 
 
 a:link {
-    color: rgb(10, 81, 10);
+    color: rgb(90, 120, 90);
     background-color: transparent;
     text-decoration: none;
   }
