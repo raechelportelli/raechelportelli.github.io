@@ -83,12 +83,15 @@ header {
 }
 
 .col-port{
+    padding-top: 1vmin;
     background-color: #f0a500;
 }
 
 .col-lft-p p{
     background-color: red;
     display: flex;
+    height: fit-content;
+    width: 50%;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
