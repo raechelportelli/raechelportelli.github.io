@@ -18,7 +18,7 @@ header {
 
 .hero_section {
     size-adjust: initial;
-    background: 
+    background: white;
     padding: 0 60px;
     color:  rgb(85, 87, 76);
 }
@@ -81,6 +81,35 @@ header {
     color: rgb(34, 34, 34);
     
 }
+
+.col-port{
+    background-color: #f0a500;
+}
+
+.col-lft-p p{
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.col-rt-p p {
+    font-size: 16px;
+    font-family: "Prompt", serif;
+    line-height: 2.3;
+    color: rgb(39, 46, 8);
+}
+
+.col-rt{
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 h2 {
     position: relative;
