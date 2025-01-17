@@ -1,9 +1,23 @@
+html {
+    font-size: 100%;
+    line-height: 1.5rem;
+    box-sizing: border-box;
+    font: "Open Sans";
+}
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    height: 100vh;
+    margin: 0 auto;
+    font: "Open Sans";
+    min-height: 100vh;
+    max-width: 1400px;
     overflow: hidden;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 
 header {
     position: fixed;
@@ -25,6 +39,7 @@ header {
 
 .navbar {
     display: flex;
+    flex-wrap:wrap;
     flex-direction: row;
     font-family: "Open Sans";
     justify-content: space-between;
@@ -33,18 +48,16 @@ header {
     padding: 1rem 2rem;
 }
 
-.logo {
+.logo, nav {
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
+    flex-direction: row;
 }
 
-.nav{    
-    display: flex;
-    flex-direction:row;
-    height: fit-content;}
-
 .nav-links {
+    display: flex;
+    justify-content: space-evenly;
     font-family: "Open Sans";
     list-style: none;
     padding: 0;
@@ -54,7 +67,8 @@ header {
 
 .nav-links li {
     margin-left: 20px;
-
+    flex: 1 0 10%;
+    text-align: center;
 }
 
 .nav-links a {
@@ -78,9 +92,10 @@ header {
     overflow-y: auto;
     padding-top: 80px;
     padding-bottom: 80px;
-    color: rgb(34, 34, 34);
-    
+    color: rgb(34, 34, 34);   
 }
+
+
 
 .col-port{
     padding-top: 1vmin;
@@ -89,7 +104,7 @@ header {
 
 .col-lft-p p{
     background-color: red;
-    display: flex;
+    display:block;
     height: fit-content;
     width: 50%;
     flex-direction: column;
@@ -208,3 +223,17 @@ p {
     height: 16px;
     width: 16px;
 }
+
+@media (min-width: 900px){
+    .header {
+        justify-content: space-between;
+        padding: 1rem 0;
+        margin: 1 rem auto 2rem auto;
+    }
+    .nav-links {
+        width: auto;
+    }
+    .logo {
+        margin: 0 0 0  0.3rem;
+    }
+    }
