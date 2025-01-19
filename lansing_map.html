@@ -1,75 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Draft Page - Greater Lansing Area</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-<link href="https://api.mapbox.com/mapbox-gl-js/v3.9.2/mapbox-gl.css" rel="stylesheet">
-<link href="lansing_map.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.9.2/mapbox-gl.js"></script>
-<style>
-
-</style>
+    <meta charset="utf-8">
+    <title>Leaflet Map with Mapbox Basemap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 500px; /* Adjust map height */
+        }
+    </style>
 </head>
 <body>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Leaflet Map with Mapbox Basemap</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <style>
-            #map {
-                width: 100%;
-                height: 500px; /* Adjust map height */
-            }
-        </style>
-    </head>
-    <body>
-        <div id="map"></div>
-    
-        <script>
-            // Your Mapbox access token
-            const accessToken = 'pk.eyJ1IjoiY3VybXVkZ2VvbnBoZCIsImEiOiJjbHAxZXU2dmwwajV6MmxwZzRpdXhobjB2In0.uIuuAtk1EtV7HSbjpUfeOw';
-    
-            // Initialize the map
-            const map = L.map('map').setView([42.726466, -84.510580], 9); // Lansing coordinates
-    
-            // Add Mapbox basemap
-            L.tileLayer(`https://api.mapbox.com/styles/v1/curmudgeonphd/cm3hhva90001k01qt8jmd2e6g/tiles/{z}/{x}/{y}?access_token=${accessToken}`, {
-                tileSize: 512,
-                zoomOffset: -1,
-                attribution: '© <a href="https://www.mapbox.com/">Mapbox</a>'
-            }).addTo(map);
-    
-            // Load GeoJSON file
-            fetch('lansing_locals.geojson')
-                .then(response => response.json())
-                .then(data => {
-                    // Define a function to create custom icons from SVG URLs
-                    function createCustomIcon(iconUrl) {
-                        return L.icon({
-                            iconUrl: URL, // URL for the icon
-                            iconSize: [32, 32], // Size of the icon
-                            iconAnchor: [16, 32] // Anchor the icon at the bottom center
+    <div id="map"></div>
+
+    <script>
+        // Your Mapbox access token
+        const accessToken = 'pk.eyJ1IjoiY3VybXVkZ2VvbnBoZCIsImEiOiJjbHAxZXU2dmwwajV6MmxwZzRpdXhobjB2In0.uIuuAtk1EtV7HSbjpUfeOw';
+
+        // Initialize the map
+        const map = L.map('map').setView([42.726466, -84.510580], 9); // Lansing coordinates
+
+        // Add Mapbox basemap
+        L.tileLayer(`https://api.mapbox.com/styles/v1/curmudgeonphd/cm3hhva90001k01qt8jmd2e6g/tiles/{z}/{x}/{y}?access_token=${accessToken}`, {
+            tileSize: 512,
+            zoomOffset: -1,
+            attribution: '© <a href="https://www.mapbox.com/">Mapbox</a>'
+        }).addTo(map);
+
+        // Load GeoJSON file
+        fetch('lansing_locals.geojson')
+            .then(response => response.json())
+            .then(data => {
+                // Define a function to create custom icons from SVG URLs
+                function createCustomIcon(iconUrl) {
+                    return L.icon({
+                        iconUrl: iconUrl, // Correct variable name here
+                        iconSize: [32, 32], // Size of the icon
+                        iconAnchor: [16, 32] // Anchor the icon at the bottom center
+                    });
+                }
+
+                // Add GeoJSON data to the map
+                L.geoJSON(data, {
+                    pointToLayer: function(feature, latlng) {
+                        // Use the 'URL' property from the GeoJSON file to set the icon
+                        const iconUrl = feature.properties.URL;
+                        return L.marker(latlng, {
+                            icon: createCustomIcon(iconUrl)
                         });
                     }
-    
-                    // Add GeoJSON data to the map
-                    L.geoJSON(data, {
-                        pointToLayer: function(feature, latlng) {
-                            // Use the 'URL' property from the GeoJSON file to set the icon
-                            const iconUrl = feature.properties.URL;
-                            return L.marker(latlng, {
-                                icon: createCustomIcon(iconUrl)
-                            });
-                        }
-                    }).addTo(map);
-                })
-                .catch(error => console.error('Error loading GeoJSON:', error));
-        </script>
-    </body>
-    </html>
+                }).addTo(map);
+            })
+            .catch(error => console.error('Error loading GeoJSON:', error));
+    </script>
+</body>
+</html>
+
     
