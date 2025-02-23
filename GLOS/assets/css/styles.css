@@ -1,4 +1,18 @@
 
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0 
+}
+
+.header {
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    background-color: va(--black-color);
+    box-shadow: 0 2px 16px hsla(220,32%, .3);
+}   
 
 h1 {
     .agu-display-<uniquifier> {
@@ -23,4 +37,13 @@ body {
         font-weight: 400;
         font-style: italic;
       }
+}
+
+.container{
+    max-width: 
+
+}
+
+ul {
+
 }
