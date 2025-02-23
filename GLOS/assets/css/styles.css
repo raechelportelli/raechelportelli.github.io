@@ -1,0 +1,26 @@
+
+
+h1 {
+    .agu-display-<uniquifier> {
+        font-family: "Agu Display", serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-variation-settings:
+          "MORF" 0;
+      }
+}
+
+body {
+    .sedan-regular {
+        font-family: "Sedan", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+      
+      .sedan-regular-italic {
+        font-family: "Sedan", serif;
+        font-weight: 400;
+        font-style: italic;
+      }
+}
