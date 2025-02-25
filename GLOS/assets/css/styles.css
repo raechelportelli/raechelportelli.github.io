@@ -27,15 +27,15 @@
 
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
-  --black-color: hsl(220, 24%, 12%);
-  --black-color-light: hsl(220, 24%, 15%);
-  --black-color-lighten: hsl(220, 20%, 18%);
+  --black-color: hsl(148, 100%, 93%);
+  --black-color-light: hsl(148, 100%, 53%);
+  --black-color-lighten: hsl(148, 100%, 23%);
   --white-color: #fff;
   --body-color: hsl(220, 100%, 97%);
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: "sedan-regular", sans-serif;
+  --body-font: "Sedan", sans-serif;
   --normal-font-size: .938rem;
 
   /*========== Font weight ==========*/
