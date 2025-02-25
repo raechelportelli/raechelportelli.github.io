@@ -30,7 +30,7 @@
   --black-color: hsl(308, 52%, 40%);
   --black-color-light: hsl(308, 52%, 25%);
   --black-color-lighten: hsl(308, 52%, 10%);
-  --white-color: #;
+  --white-color: hsl(300, 41%, 94%);
   --body-color: hsl(220, 100%, 97%);
 
   /*========== Font and typography ==========*/
