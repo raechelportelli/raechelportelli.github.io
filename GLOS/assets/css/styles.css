@@ -71,6 +71,8 @@ body {
   background-color: var(--body-color);
 }
 
+p {font-family: 
+
 ul {
   list-style: none;
   /* Color highlighting when pressed on mobile devices */
