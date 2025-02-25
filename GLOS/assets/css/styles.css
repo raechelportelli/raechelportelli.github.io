@@ -36,7 +36,7 @@
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
   --body-font: "Sedan", sans-serif;
-  --normal-font-size: 2.38rem;
+  --normal-font-size: 2.5rem;
 
   /*========== Font weight ==========*/
   --font-regular: 400;
@@ -50,7 +50,7 @@
 /*========== Responsive typography ==========*/
 @media screen and (min-width: 1024px) {
   :root {
-    --normal-font-size: 1rem;
+    --normal-font-size: 2.5rem;
   }
 }
 
@@ -62,13 +62,14 @@
 }
 
 body {
-  font-family: "Agu Display";
+  font-family: "Sedan";
   font-size: var(--normal-font-size);
   background-color: var(--body-color);
 }
 
 ul {
   list-style: none;
+  font-size: var(--normal-font-size);
   /* Color highlighting when pressed on mobile devices */
   /*-webkit-tap-highlight-color: transparent;*/
 }
@@ -123,7 +124,7 @@ a {
 
 .nav__logo i {
   font-weight: initial;
-  font-size: 1.25rem;
+  font-size: 2.5rem;
 }
 
 .nav__toggle {
@@ -139,7 +140,7 @@ a {
   height: max-content;
   inset: 0;
   margin: auto;
-  font-size: 1.25rem;
+  font-size: 2.5rem;
   cursor: pointer;
   transition: opacity .1s, transform .4s;
 }
