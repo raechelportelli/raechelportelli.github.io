@@ -27,10 +27,10 @@
 
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
-  --black-color: hsl(148, 100%, 93%);
-  --black-color-light: hsl(148, 100%, 53%);
-  --black-color-lighten: hsl(148, 100%, 23%);
-  --white-color: #fff;
+  --black-color: hsl(308, 52%, 40%);
+  --black-color-light: hsl(308, 52%, 25%);
+  --black-color-lighten: hsl(308, 52%, 10%);
+  --white-color: #;
   --body-color: hsl(220, 100%, 97%);
 
   /*========== Font and typography ==========*/
