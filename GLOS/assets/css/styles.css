@@ -5,6 +5,13 @@
     margin: 0 
 }
 
+.center-div {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+
 .header {
     position: fixed;
     top:0;
