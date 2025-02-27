@@ -385,8 +385,9 @@ a {
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
-  position: relative;
+  max-width: 100%; /*-updated-*/
+  position: fixed;
+  
   z-index: -100;
   margin: auto;
 }
