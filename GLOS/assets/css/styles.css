@@ -361,6 +361,7 @@ a {
 .slideshow-container {
   max-width: 1000px;
   position: relative;
+  z-index: -100;
   margin: auto;
 }
 
