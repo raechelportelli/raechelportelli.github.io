@@ -393,12 +393,11 @@ a {
 .slideshow-container {
   order: 2; 
   max-width: 100%; /*-updated-*/
-  position: flex;
-  
-  
-  z-index: -100;
+  position: flex; 
   margin: auto;
 }
+
+
 
 
 /* Next & previous buttons */
