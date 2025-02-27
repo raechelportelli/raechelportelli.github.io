@@ -30,8 +30,9 @@
 /*----------DIVS----------------*/
 
 .center-div {
-    position: flex; /*-updated-*/
+    position: flex;/*-updated-*/
   margin: auto;
+  order: 3;
   width: 50%;
   border: 0;
   padding: 10px;
@@ -40,6 +41,7 @@
 .header {
     position: flex; /*-updated-*/
     top:0;
+    order: 1;
     left: 0;
     width: 100%;
     background-color: var(--black-color);
@@ -389,17 +391,15 @@ a {
 
 /* Slideshow container */
 .slideshow-container {
+  order: 2; 
   max-width: 100%; /*-updated-*/
-  position: fixed;
+  position: flex;
+  
   
   z-index: -100;
   margin: auto;
 }
 
-/* Hide the images by default */
-.mySlides {
-  display: none;
-}
 
 /* Next & previous buttons */
 .prev, .next {
