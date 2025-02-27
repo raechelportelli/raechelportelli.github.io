@@ -47,6 +47,10 @@
     z-index: var(--z-fixed);
 }   
 
+.main-bod {
+    margin: var(--header-height);
+}
+
 /*=============== VARIABLES CSS ===============*/
 :root {
   --header-height: 3.5rem;
