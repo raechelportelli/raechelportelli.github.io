@@ -1,20 +1,10 @@
-/*============Slideshow===========*/
-
-let slideIndex = 0;
-showSlides();
-
 function showSlides() {
     let slides = document.getElementsByClassName("mySlides");
     let dots = document.getElementsByClassName("dot");
-    
+
     // Hide all slides
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
-    }
-
-    slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1;
     }
 
     // Remove active class from all dots
@@ -23,25 +13,20 @@ function showSlides() {
     }
 
     // Display the current slide and activate the corresponding dot
-    slides[slideIndex - 1].style.display = "block";
-    dots[slideIndex - 1].className += " active";
+    slides[slideIndex].style.display = "block";
+    dots[slideIndex].className += " active";
 
-    // Change slide every 3 seconds (3000 ms)
+    // Increment slideIndex AFTER displaying
+    slideIndex++;
+
+    // Reset to 0 if exceeding the number of slides
+    if (slideIndex >= slides.length) {
+        slideIndex = 0;
+    }
+
+    // Change slide every 3 seconds
     setTimeout(showSlides, 3000);
 }
-
-// Function to move slides manually
-function plusSlides(n) {
-    slideIndex += n - 1; // Adjust index for manual navigation
-    showSlides();
-}
-
-// Function to go to a specific slide
-function currentSlide(n) {
-    slideIndex = n - 1;
-    showSlides();
-}
-
 
 
 /*=============== SHOW MENU ===============*/
