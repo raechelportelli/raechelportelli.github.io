@@ -39,13 +39,16 @@
 }
 
 .header {
-    position: fixed; /* Updated */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: var(--black-color);
     box-shadow: 0 2px 16px hsla(220,32%,8%, .3);
     z-index: var(--z-fixed);
+    display: flex;
+    align-items: center;
+    padding: 1rem;
 }
 
 .main-bod {
@@ -92,6 +95,10 @@ body {
   background-color: var(--black-color);
   box-shadow: 0 2px 16px hsla(220, 32%, 8%, .3);
   z-index: var(--z-fixed);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
 
 /*=============== SLIDESHOW ===============*/
@@ -101,11 +108,16 @@ body {
   position: relative;
   top: var(--header-height); /* Ensures it stays below the navbar */
   overflow: hidden; /* Prevents repositioning */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .mySlides {
   display: none;
-  position: relative; /* Ensures images don't change position */
+  position: absolute;
+  width: 100%;
+  top: var(--header-height);
 }
 
 .prev, .next {
