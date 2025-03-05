@@ -99,11 +99,13 @@ body {
   max-width: 100%;
   margin: auto;
   position: relative;
-  margin-top: var(--header-height); /* Ensure it appears below the fixed header */
+  top: var(--header-height); /* Ensures it stays below the navbar */
+  overflow: hidden; /* Prevents repositioning */
 }
 
 .mySlides {
   display: none;
+  position: relative; /* Ensures images don't change position */
 }
 
 .prev, .next {
@@ -171,5 +173,4 @@ body {
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
-}"
 }
