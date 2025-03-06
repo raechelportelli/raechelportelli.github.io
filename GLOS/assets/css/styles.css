@@ -3,7 +3,7 @@
 //*-- Navbar--*//
 
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sedan:wght@400;600&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
 :root {
@@ -19,7 +19,7 @@
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: "Montserrat", sans-serif;
+  --body-font: "Sedan", sans-serif;
   --normal-font-size: .938rem;
 
   /*========== Font weight ==========*/
