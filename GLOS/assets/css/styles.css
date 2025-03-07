@@ -73,6 +73,7 @@ a {
 
 /*=============== HEADER ===============*/
 .header {
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
@@ -140,7 +141,6 @@ a {
 @media screen and (max-width: 1118px) {
   .nav__menu {
     position: absolute;
-   z-index: 1000; /* v1 */
     left: 0;
     top: 2.5rem;
     width: 100%;
