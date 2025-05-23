@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn D3.js - Interactive Examples</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        .example {
+            margin: 40px 0;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        
+        .example h2 {
+            color: #444;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        input[type="range"] {
+            width: 200px;
+        }
+        
+        .bar {
+            fill: #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .bar:hover {
+            fill: #764ba2;
+        }
+        
+        .axis {
+            font-size: 12px;
+        }
+        
+        .circle {
+            fill: #667eea;
+            stroke: #764ba2;
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .circle:hover {
+            fill: #764ba2;
+            r: 8;
+        }
+        
+        .line {
+            fill: none;
+            stroke: #667eea;
+            stroke-width: 3;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Learn D3.js - Interactive Examples</h1>
+        
+        <!-- Example 1: Basic Bar Chart -->
+        <div class="example">
+            <h2>1. Basic Bar Chart - Data Binding & Scales</h2>
+            <p>This demonstrates how D3 binds data to DOM elements and uses scales to map data to visual properties.</p>
+            <div class="controls">
+                <button onclick="updateBarData()">🎲 Generate New Data</button>
+                <button onclick="sortBars()">📊 Sort Bars</button>
+            </div>
+            <div id="bar-chart"></div>
+        </div>
+        
+        <!-- Example 2: Interactive Scatter Plot -->
+        <div class="example">
+            <h2>2. Interactive Scatter Plot - Mouse Events</h2>
+            <p>Shows how to add interactivity with mouse events and tooltips.</p>
+            <div class="controls">
+                <button onclick="updateScatterData()">🔄 New Dataset</button>
+                <label>Points: <input type="range" id="pointSlider" min="10" max="50" value="25" onchange="updatePointCount()"></label>
+                <span id="pointCount">25</span>
+            </div>
+            <div id="scatter-plot"></div>
+            <div class="tooltip" id="tooltip"></div>
+        </div>
+        
+        <!-- Example 3: Animated Line Chart -->
+        <div class="example">
+            <h2>3. Animated Line Chart - Transitions</h2>
+            <p>Demonstrates D3's powerful transition system for smooth animations.</p>
+            <div class="controls">
+                <button onclick="startAnimation()">▶️ Start Animation</button>
+                <button onclick="stopAnimation()">⏹️ Stop</button>
+                <button onclick="resetLine()">🔄 Reset</button>
+            </div>
+            <div id="line-chart"></div>
+        </div>
+        
+        <!-- Example 4: Enter/Update/Exit Pattern -->
+        <div class="example">
+            <h2>4. Enter/Update/Exit Pattern</h2>
+            <p>The fundamental D3 pattern for handling data changes - new elements enter, existing update, old ones exit.</p>
+            <div class="controls">
+                <button onclick="addCircle()">➕ Add Circle</button>
+                <button onclick="removeCircle()">➖ Remove Circle</button>
+                <button onclick="updateCircles()">🔄 Update All</button>
+            </div>
+            <div id="enter-exit-demo"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let barData = [12, 19, 3, 5, 2, 3, 15, 8, 14, 7];
+        let scatterData = [];
+        let lineData = [];
+        let circleData = [];
+        let animationInterval;
+        
+        // Initialize all examples
+        initBarChart();
+        initScatterPlot();
+        initLineChart();
+        initEnterExit();
+        
+        // Example 1: Bar Chart
+        function initBarChart() {
+            const margin = {top: 20, right: 30, bottom: 40, left: 40};
+            const width = 600 - margin.left - margin.right;
+            const height = 300 - margin.bottom - margin.top;
+            
+            const svg = d3.select('#bar-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+                
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            updateBarChart();
+        }
+        
+        function updateBarChart() {
+            const margin = {top: 20, right: 30, bottom: 40, left: 40};
+            const width = 600 - margin.left - margin.right;
+            const height = 300 - margin.bottom - margin.top;
+            
+            const xScale = d3.scaleBand()
+                .domain(d3.range(barData.length))
+                .range([0, width])
+                .padding(0.1);
+                
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(barData)])
+                .range([height, 0]);
+            
+            const svg = d3.select('#bar-chart svg g');
+            
+            // Remove old axes
+            svg.selectAll('.axis').remove();
+            
+            // Add axes
+            svg.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale));
+                
+            svg.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(yScale));
+            
+            // Update bars
+            const bars = svg.selectAll('.bar')
+                .data(barData);
+                
+            bars.enter()
+                .append('rect')
+                .attr('class', 'bar')
+                .merge(bars)
+                .transition()
+                .duration(750)
+                .attr('x', (d, i) => xScale(i))
+                .attr('y', d => yScale(d))
+                .attr('width', xScale.bandwidth())
+                .attr('height', d => height - yScale(d));
+                
+            bars.exit().remove();
+        }
+        
+        function updateBarData() {
+            barData = Array.from({length: Math.floor(Math.random() * 8) + 5}, 
+                () => Math.floor(Math.random() * 20) + 1);
+            updateBarChart();
+        }
+        
+        function sortBars() {
+            barData.sort((a, b) => b - a);
+            updateBarChart();
+        }
+        
+        // Example 2: Scatter Plot
+        function initScatterPlot() {
+            generateScatterData(25);
+            updateScatterPlot();
+        }
+        
+        function generateScatterData(count) {
+            scatterData = Array.from({length: count}, () => ({
+                x: Math.random() * 100,
+                y: Math.random() * 100,
+                size: Math.random() * 10 + 5
+            }));
+        }
+        
+        function updateScatterPlot() {
+            const margin = {top: 20, right: 30, bottom: 40, left: 40};
+            const width = 600 - margin.left - margin.right;
+            const height = 300 - margin.bottom - margin.top;
+            
+            d3.select('#scatter-plot').selectAll('*').remove();
+            
+            const svg = d3.select('#scatter-plot')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+                
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            const xScale = d3.scaleLinear().domain([0, 100]).range([0, width]);
+            const yScale = d3.scaleLinear().domain([0, 100]).range([height, 0]);
+            
+            // Add axes
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale));
+                
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(yScale));
+            
+            // Add circles
+            const tooltip = d3.select('#tooltip');
+            
+            g.selectAll('.circle')
+                .data(scatterData)
+                .enter()
+                .append('circle')
+                .attr('class', 'circle')
+                .attr('cx', d => xScale(d.x))
+                .attr('cy', d => yScale(d.y))
+                .attr('r', d => d.size)
+                .on('mouseover', function(event, d) {
+                    tooltip.transition().style('opacity', 1);
+                    tooltip.html(`X: ${d.x.toFixed(1)}<br>Y: ${d.y.toFixed(1)}<br>Size: ${d.size.toFixed(1)}`)
+                        .style('left', (event.pageX + 10) + 'px')
+                        .style('top', (event.pageY - 10) + 'px');
+                })
+                .on('mouseout', function() {
+                    tooltip.transition().style('opacity', 0);
+                });
+        }
+        
+        function updateScatterData() {
+            const count = document.getElementById('pointSlider').value;
+            generateScatterData(parseInt(count));
+            updateScatterPlot();
+        }
+        
+        function updatePointCount() {
+            const count = document.getElementById('pointSlider').value;
+            document.getElementById('pointCount').textContent = count;
+            generateScatterData(parseInt(count));
+            updateScatterPlot();
+        }
+        
+        // Example 3: Line Chart
+        function initLineChart() {
+            lineData = Array.from({length: 20}, (_, i) => ({
+                x: i,
+                y: Math.sin(i * 0.5) * 50 + 100
+            }));
+            updateLineChart();
+        }
+        
+        function updateLineChart() {
+            const margin = {top: 20, right: 30, bottom: 40, left: 40};
+            const width = 600 - margin.left - margin.right;
+            const height = 300 - margin.bottom - margin.top;
+            
+            d3.select('#line-chart').selectAll('*').remove();
+            
+            const svg = d3.select('#line-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom);
+                
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            const xScale = d3.scaleLinear()
+                .domain(d3.extent(lineData, d => d.x))
+                .range([0, width]);
+                
+            const yScale = d3.scaleLinear()
+                .domain(d3.extent(lineData, d => d.y))
+                .range([height, 0]);
+            
+            const line = d3.line()
+                .x(d => xScale(d.x))
+                .y(d => yScale(d.y))
+                .curve(d3.curveMonotoneX);
+            
+            // Add axes
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale));
+                
+            g.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(yScale));
+            
+            // Add line
+            g.append('path')
+                .datum(lineData)
+                .attr('class', 'line')
+                .attr('d', line);
+        }
+        
+        function startAnimation() {
+            stopAnimation();
+            animationInterval = setInterval(() => {
+                lineData = lineData.map((d, i) => ({
+                    x: d.x,
+                    y: Math.sin(d.x * 0.5 + Date.now() * 0.01) * 50 + 100
+                }));
+                
+                const line = d3.line()
+                    .x(d => d3.scaleLinear().domain(d3.extent(lineData, d => d.x)).range([0, 520])(d.x))
+                    .y(d => d3.scaleLinear().domain(d3.extent(lineData, d => d.y)).range([240, 0])(d.y))
+                    .curve(d3.curveMonotoneX);
+                
+                d3.select('#line-chart .line')
+                    .datum(lineData)
+                    .transition()
+                    .duration(100)
+                    .attr('d', line);
+            }, 100);
+        }
+        
+        function stopAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+        }
+        
+        function resetLine() {
+            stopAnimation();
+            initLineChart();
+        }
+        
+        // Example 4: Enter/Update/Exit
+        function initEnterExit() {
+            circleData = [1, 2, 3];
+            updateEnterExit();
+        }
+        
+        function updateEnterExit() {
+            const svg = d3.select('#enter-exit-demo')
+                .selectAll('svg')
+                .data([1]);
+                
+            const svgEnter = svg.enter()
+                .append('svg')
+                .attr('width', 600)
+                .attr('height', 200);
+            
+            const circles = svgEnter.merge(svg)
+                .selectAll('.demo-circle')
+                .data(circleData, d => d);
+            
+            // Enter
+            circles.enter()
+                .append('circle')
+                .attr('class', 'demo-circle')
+                .attr('r', 0)
+                .attr('cx', (d, i) => 50 + i * 80)
+                .attr('cy', 100)
+                .style('fill', '#667eea')
+                .transition()
+                .duration(500)
+                .attr('r', 25);
+            
+            // Update
+            circles.transition()
+                .duration(500)
+                .attr('cx', (d, i) => 50 + i * 80)
+                .style('fill', d => d3.interpolateRainbow(d / 10));
+            
+            // Exit
+            circles.exit()
+                .transition()
+                .duration(500)
+                .attr('r', 0)
+                .remove();
+        }
+        
+        function addCircle() {
+            const newValue = Math.floor(Math.random() * 10) + 1;
+            circleData.push(newValue);
+            updateEnterExit();
+        }
+        
+        function removeCircle() {
+            if (circleData.length > 0) {
+                circleData.pop();
+                updateEnterExit();
+            }
+        }
+        
+        function updateCircles() {
+            circleData = circleData.map(() => Math.floor(Math.random() * 10) + 1);
+            updateEnterExit();
+        }
+    </script>
+</body>
+</html>
