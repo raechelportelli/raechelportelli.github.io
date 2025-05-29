@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orchid Collection Manager</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .upload-area {
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .upload-box {
+            border: 2px dashed #007bff;
+            border-radius: 10px;
+            padding: 40px;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-box:hover {
+            border-color: #0056b3;
+            background: #f8f9ff;
+        }
+        
+        .upload-box.dragover {
+            border-color: #28a745;
+            background: #f8fff8;
+        }
+        
+        .upload-icon {
+            font-size: 3em;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            font-size: 1.2em;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .upload-subtext {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        #fileInput {
+            display: none;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            display: none; /* Hidden until file is loaded */
+        }
+        
+        .controls.visible {
+            display: flex;
+        }
+        
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .stats {
+            padding: 20px 30px;
+            background: #e3f2fd;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            display: none; /* Hidden until file is loaded */
+        }
+        
+        .stats.visible {
+            display: flex;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .content {
+            padding: 30px;
+            display: none; /* Hidden until file is loaded */
+        }
+        
+        .content.visible {
+            display: block;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .group-header {
+            background: #e9ecef !important;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .group-count {
+            background: #007bff;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        
+        .temp-warm { background: rgba(255, 193, 7, 0.2); }
+        .temp-cool { background: rgba(0, 123, 255, 0.2); }
+        .temp-inter { background: rgba(40, 167, 69, 0.2); }
+        
+        .light-bright { color: #ffc107; font-weight: bold; }
+        .light-low { color: #6c757d; }
+        .light-med { color: #28a745; }
+        
+        .missing-data {
+            color: #dc3545;
+            font-style: italic;
+        }
+        
+        .search-highlight {
+            background: yellow;
+            font-weight: bold;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .demo-data-btn {
+            background: #28a745;
+            margin-top: 15px;
+            margin-left: 10px;
+        }
+        
+        .demo-data-btn:hover {
+            background: #1e7e34;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .upload-area {
+                padding: 20px;
+            }
+            
+            .upload-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌺 Orchid Collection Manager</h1>
+            <p>Organized and searchable orchid database</p>
+        </div>
+        
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-box" id="uploadBox">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Upload Your Orchid Excel File</div>
+                <div class="upload-subtext">Click here or drag and drop your Plants.xlsx file</div>
+                <input type="file" id="fileInput" accept=".xlsx,.xls">
+                <button class="demo-data-btn" onclick="loadDemoData()">Try with Demo Data</button>
+            </div>
+        </div>
+        
+        <div class="controls" id="controls">
+            <div class="control-group">
+                <label for="groupFilter">Filter by Group:</label>
+                <select id="groupFilter">
+                    <option value="">All Groups</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="tempFilter">Temperature:</label>
+                <select id="tempFilter">
+                    <option value="">All Temps</option>
+                    <option value="Cool">Cool</option>
+                    <option value="Inter">Intermediate</option>
+                    <option value="Warm">Warm</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="searchInput">Search:</label>
+                <input type="text" id="searchInput" placeholder="Search names, growers, etc.">
+            </div>
+            
+            <div class="control-group">
+                <label for="sortBy">Sort by:</label>
+                <select id="sortBy">
+                    <option value="group">Group</option>
+                    <option value="name">Name</option>
+                    <option value="acquired">Year Acquired</option>
+                    <option value="grower">Grower</option>
+                </select>
+            </div>
+            
+            <button onclick="exportToExcel()">Export Organized Data</button>
+        </div>
+        
+        <div class="stats" id="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Total Plants</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="groupCount">0</div>
+                <div class="stat-label">Groups</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="recentCount">0</div>
+                <div class="stat-label">Added 2024-2025</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="bloomingCount">0</div>
+                <div class="stat-label">Have Bloomed</div>
+            </div>
+        </div>
+        
+        <div class="content" id="content">
+            <div class="table-container">
+                <table id="orchidTable">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>ID</th>
+                            <th>Plant Name</th>
+                            <th>Temperature</th>
+                            <th>Light</th>
+                            <th>Humidity</th>
+                            <th>Greenhouse</th>
+                            <th>Year Acquired</th>
+                            <th>Grower</th>
+                            <th>Bloom Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orchidTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let originalData = [];
+        let filteredData = [];
+        
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            setupUploadHandlers();
+        });
+        
+        function setupUploadHandlers() {
+            const uploadBox = document.getElementById('uploadBox');
+            const fileInput = document.getElementById('fileInput');
+            
+            // Click to upload
+            uploadBox.addEventListener('click', () => fileInput.click());
+            
+            // File input change
+            fileInput.addEventListener('change', handleFileUpload);
+            
+            // Drag and drop
+            uploadBox.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadBox.classList.add('dragover');
+            });
+            
+            uploadBox.addEventListener('dragleave', () => {
+                uploadBox.classList.remove('dragover');
+            });
+            
+            uploadBox.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadBox.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    processFile(files[0]);
+                }
+            });
+        }
+        
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+        
+        function processFile(file) {
+            showLoading();
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    processExcelData(e.target.result);
+                    showDataInterface();
+                } catch (error) {
+                    console.error('Error processing file:', error);
+                    showError('Error processing Excel file. Please check the file format.');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+        
+        function showLoading() {
+            document.getElementById('uploadArea').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div>Processing your Excel file...</div>
+                </div>
+            `;
+        }
+        
+        function showError(message) {
+            document.getElementById('uploadArea').innerHTML = `
+                <div class="upload-box" style="border-color: #dc3545; background: #fff5f5;">
+                    <div class="upload-icon" style="color: #dc3545;">⚠️</div>
+                    <div class="upload-text" style="color: #dc3545;">${message}</div>
+                    <div class="upload-subtext">
+                        <button onclick="location.reload()" style="margin-top: 15px;">Try Again</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showDataInterface() {
+            document.getElementById('uploadArea').style.display = 'none';
+            document.getElementById('controls').classList.add('visible');
+            document.getElementById('stats').classList.add('visible');
+            document.getElementById('content').classList.add('visible');
+        }
+        
+        function processExcelData(fileData) {
+            const workbook = XLSX.read(fileData, {
+                cellStyles: true,
+                cellFormulas: true,
+                cellDates: true,
+                cellNF: true,
+                sheetStubs: true
+            });
+            
+            // Try to find the main sheet
+            let mainSheet;
+            const possibleSheetNames = ["Orchids_Feb232025", "Sheet1", workbook.SheetNames[0]];
+            
+            for (const sheetName of possibleSheetNames) {
+                if (workbook.Sheets[sheetName]) {
+                    mainSheet = workbook.Sheets[sheetName];
+                    break;
+                }
+            }
+            
+            if (!mainSheet) {
+                throw new Error('Could not find orchid data sheet');
+            }
+            
+            const rawData = XLSX.utils.sheet_to_json(mainSheet, { header: 1, defval: "" });
+            
+            // Clean and organize the data
+            originalData = [];
+            for (let i = 1; i < rawData.length; i++) {
+                if (rawData[i] && rawData[i][0] !== "") {
+                    const row = rawData[i];
+                    originalData.push({
+                        group: cleanText(row[0]),
+                        id: row[1] || '',
+                        name: cleanText(row[2]),
+                        temp: cleanText(row[3]),
+                        light: cleanText(row[4]),
+                        humidity: cleanText(row[5]),
+                        greenhouse: cleanText(row[6]),
+                        acquired: row[7] || '',
+                        grower: cleanText(row[8]),
+                        bloom: cleanText(row[9])
+                    });
+                }
+            }
+            
+            if (originalData.length === 0) {
+                throw new Error('No valid orchid data found in the file');
+            }
+            
+            initializeFilters();
+            updateDisplay();
+            updateStats();
+        }
+        
+        function loadDemoData() {
+            // Create some demo data to show how the interface works
+            originalData = [
+                {group: "Cattleya", id: 1, name: "Cattleya trianae 'Blue Sky'", temp: "Warm", light: "Bright", humidity: "High", greenhouse: "Hot", acquired: 2024, grower: "OrchidCo", bloom: "Yes"},
+                {group: "Paphiopedilum", id: 1, name: "Paph. Maudiae 'Green Valley'", temp: "Inter", light: "Low", humidity: "High", greenhouse: "Inter", acquired: 2023, grower: "PaphHouse", bloom: "No"},
+                {group: "Phalaenopsis", id: 1, name: "Phal. Pink Dream", temp: "Warm", light: "Med", humidity: "Med", greenhouse: "Hot", acquired: 2025, grower: "TropicOrchids", bloom: "Yes"},
+                {group: "Dendrobium", id: 1, name: "Den. nobile 'White Angel'", temp: "Cool", light: "Bright", humidity: "Low", greenhouse: "Cool", acquired: 2024, grower: "DendroFarm", bloom: "Yes"},
+                {group: "Oncidium", id: 1, name: "Onc. Sharry Baby 'Sweet Fragrance'", temp: "Inter", light: "Med", humidity: "Med", greenhouse: "Inter", acquired: 2023, grower: "FragrantOrchids", bloom: "Yes"}
+            ];
+            
+            showDataInterface();
+            initializeFilters();
+            updateDisplay();
+            updateStats();
+        }
+        
+        function cleanText(text) {
+            if (!text) return '';
+            return text.toString().trim();
+        }
+        
+        function initializeFilters() {
+            // Populate group filter
+            const groups = [...new Set(originalData.map(item => item.group))].sort();
+            const groupFilter = document.getElementById('groupFilter');
+            groupFilter.innerHTML = '<option value="">All Groups</option>';
+            groups.forEach(group => {
+                if (group) {
+                    const option = document.createElement('option');
+                    option.value = group;
+                    option.textContent = group;
+                    groupFilter.appendChild(option);
+                }
+            });
+            
+            // Add event listeners
+            document.getElementById('groupFilter').addEventListener('change', applyFilters);
+            document.getElementById('tempFilter').addEventListener('change', applyFilters);
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            document.getElementById('sortBy').addEventListener('change', applyFilters);
+        }
+        
+        function applyFilters() {
+            const groupFilter = document.getElementById('groupFilter').value;
+            const tempFilter = document.getElementById('tempFilter').value;
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const sortBy = document.getElementById('sortBy').value;
+            
+            // Filter data
+            filteredData = originalData.filter(item => {
+                const matchesGroup = !groupFilter || item.group === groupFilter;
+                const matchesTemp = !tempFilter || item.temp === tempFilter;
+                const matchesSearch = !searchInput || 
+                    item.name.toLowerCase().includes(searchInput) ||
+                    item.group.toLowerCase().includes(searchInput) ||
+                    item.grower.toLowerCase().includes(searchInput);
+                
+                return matchesGroup && matchesTemp && matchesSearch;
+            });
+            
+            // Sort data
+            filteredData.sort((a, b) => {
+                switch (sortBy) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'acquired':
+                        return (b.acquired || 0) - (a.acquired || 0);
+                    case 'grower':
+                        return a.grower.localeCompare(b.grower);
+                    default: // group
+                        return a.group.localeCompare(b.group) || a.name.localeCompare(b.name);
+                }
+            });
+            
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            const tbody = document.getElementById('orchidTableBody');
+            tbody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: #6c757d; padding: 40px;">No orchids match your current filters</td></tr>';
+                return;
+            }
+            
+            let currentGroup = '';
+            
+            filteredData.forEach((item, index) => {
+                // Add group header if group changed
+                if (item.group !== currentGroup && document.getElementById('sortBy').value === 'group') {
+                    currentGroup = item.group;
+                    const groupCount = filteredData.filter(d => d.group === currentGroup).length;
+                    const groupRow = document.createElement('tr');
+                    groupRow.className = 'group-header';
+                    groupRow.innerHTML = `
+                        <td colspan="10">
+                            ${currentGroup} <span class="group-count">${groupCount}</span>
+                        </td>
+                    `;
+                    tbody.appendChild(groupRow);
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.group}</td>
+                    <td>${item.id}</td>
+                    <td><strong>${item.name}</strong></td>
+                    <td class="temp-${item.temp.toLowerCase()}">${item.temp || '<span class="missing-data">Not specified</span>'}</td>
+                    <td class="light-${item.light.toLowerCase()}">${item.light || '<span class="missing-data">Not specified</span>'}</td>
+                    <td>${item.humidity || '<span class="missing-data">Not specified</span>'}</td>
+                    <td>${item.greenhouse || '<span class="missing-data">Not specified</span>'}</td>
+                    <td>${item.acquired || '<span class="missing-data">Unknown</span>'}</td>
+                    <td>${item.grower || '<span class="missing-data">Unknown</span>'}</td>
+                    <td>${item.bloom || '<span class="missing-data">Not recorded</span>'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Update total count
+            document.getElementById('totalCount').textContent = filteredData.length;
+        }
+        
+        function updateStats() {
+            const groups = new Set(originalData.map(item => item.group));
+            const recentItems = originalData.filter(item => 
+                item.acquired && (item.acquired == 2024 || item.acquired == 2025)
+            );
+            const bloomingItems = originalData.filter(item => 
+                item.bloom && item.bloom.toLowerCase() !== 'not recorded' && 
+                item.bloom !== '' && item.bloom.toLowerCase() !== 'no'
+            );
+            
+            document.getElementById('totalCount').textContent = originalData.length;
+            document.getElementById('groupCount').textContent = groups.size;
+            document.getElementById('recentCount').textContent = recentItems.length;
+            document.getElementById('bloomingCount').textContent = bloomingItems.length;
+        }
+        
+        function exportToExcel() {
+            // Create a new workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Main organized data
+            const wsData = [
+                ['Group', 'ID', 'Plant Name', 'Temperature', 'Light', 'Humidity', 'Greenhouse', 'Year Acquired', 'Grower', 'Bloom Status']
+            ];
+            
+            originalData.forEach(item => {
+                wsData.push([
+                    item.group,
+                    item.id,
+                    item.name,
+                    item.temp,
+                    item.light,
+                    item.humidity,
+                    item.greenhouse,
+                    item.acquired,
+                    item.grower,
+                    item.bloom
+                ]);
+            });
+            
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            XLSX.utils.book_append_sheet(wb, ws, "Organized Collection");
+            
+            // Summary by group
+            const groupSummary = {};
+            originalData.forEach(item => {
+                if (!groupSummary[item.group]) {
+                    groupSummary[item.group] = 0;
+                }
+                groupSummary[item.group]++;
+            });
+            
+            const summaryData = [['Group', 'Count']];
+            Object.entries(groupSummary)
+                .sort(([,a], [,b]) => b - a)
+                .forEach(([group, count]) => {
+                    summaryData.push([group, count]);
+                });
+            
+            const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+            XLSX.utils.book_append_sheet(wb, wsSummary, "Summary by Group");
+            
+            // Export
+            XLSX.writeFile(wb, "Organized_Orchid_Collection.xlsx");
+        }
+    </script>
+</body>
+</html>
