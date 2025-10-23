@@ -7,15 +7,12 @@
 
 header {
     position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
 }
 
 .hero_section {
     size-adjust: initial;
     background: white;
-    padding: 0;
+    padding: 0 60px;
     color: rgb(85, 87, 76);
 }
 
@@ -40,17 +37,15 @@ span {
     background: white;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    min-height: 100vh;
-    padding-top: 80px;
+    grid-template-rows: 820px;
 }
 
 .column_left {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 40px 60px;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
 }
 
 .column_left h1{
@@ -59,39 +54,21 @@ span {
     font-family: "Prompt", serif;
     font-weight: 800;
     font-style: normal;
-    margin-bottom: 20px;
 }
 
-.column_left h2 {
+.column_left h2{
     color: rgb(85, 87, 76);
     font-size: 32px;
     font-family: "Prompt", serif;
     font-weight: 800;
     font-style: normal;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin-top: 20px;
 }
 
 .column_left p {
     font-size: 16px;
     font-family: "Prompt", serif;
     line-height: 2.3;
-    color: rgb(39, 46, 8);
-    margin-bottom: 15px;
-}
-
-.column_left ul {
-    font-family: "Open Sans", serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    font-variation-settings: "wdth" 100;
-    margin-left: 20px;
-    line-height: 1.8;
-}
-
-.column_left li {
-    margin-bottom: 10px;
     color: rgb(39, 46, 8);
 }
 
@@ -100,7 +77,6 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px;
 }
 
 .logo {
@@ -137,12 +113,6 @@ span {
     margin-left: 20px;
 }
 
-.nav-links li p {
-    color: white;
-    font-weight: 700;
-    margin: 0;
-}
-
 .nav-links a {
     text-decoration: none;
     font-family: "Open Sans";
@@ -156,22 +126,12 @@ span {
     color: #f0a500;
 }
 
+.nav-links b {
+    color: white;
+}
+
 .hero_img {
     max-width: 80%;
-}
-
-h2 {
-    position: relative;
-    font-family: "Prompt", serif;
-    font-weight: 800;
-}
-
-ul {
-    font-family: "Open Sans", serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    font-variation-settings: "wdth" 100;
 }
 
 a:link {
@@ -197,10 +157,6 @@ a:active {
     color: rgb(1, 45, 9);
     background-color: transparent;
     text-decoration: underline;
-}
-
-footer {
-    width: 100%;
 }
 
 .footer-container {
@@ -238,50 +194,8 @@ footer {
 
 .bi-bluesky::before {
     content: "";
-    background-color: currentColor;
-    -webkit-mask: url("../images/icons/bluesky.svg") no-repeat 50% 50%;
-    mask: url("../images/icons/bluesky.svg") no-repeat 50% 50%;
-    -webkit-mask-size: cover;
-    mask-size: cover;
+    -webkit-mask: url("../imgs/bsky.svg") no-repeat 50% 50%;
+    mask: url("../imgs/bsky.svg") no-repeat 50% 50%;
     height: 16px;
     width: 16px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-links li {
-        margin: 10px 0;
-    }
-    
-    .hero_wrapper {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
-    
-    .column_left {
-        padding: 20px;
-    }
-}
-
-@media (min-width: 900px){
-    .header {
-        justify-content: space-between;
-        padding: 1rem 0;
-        margin: 1rem auto 2rem auto;
-    }
-    .nav-links {
-        width: auto;
-    }
-    .logo {
-        margin: 0 0 0 0.3rem;
-    }
 }
