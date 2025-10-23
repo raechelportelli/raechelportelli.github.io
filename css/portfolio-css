@@ -38,6 +38,7 @@ span {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 820px;
+    padding-top: 80px;
 }
 
 .column_left {
@@ -203,7 +204,7 @@ a:active {
 /* Portfolio Gallery Styles */
 .portfolio_wrapper {
     background: white;
-    padding: 100px 60px 60px 60px;
+    padding: 120px 60px 60px 60px;
     min-height: 100vh;
 }
 
@@ -278,7 +279,7 @@ a:active {
     }
     
     .portfolio_wrapper {
-        padding: 100px 20px 40px 20px;
+        padding: 120px 20px 40px 20px;
     }
     
     .portfolio_wrapper h1 {
