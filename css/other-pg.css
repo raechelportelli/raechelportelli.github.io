@@ -1,33 +1,12 @@
-html {
-    font-size: 100%;
-    line-height: 1.5rem;
+*{
     box-sizing: border-box;
-    font: "Open Sans";
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", serif;
 }
-body {
-    margin: 0 auto;
-    font: "Open Sans";
-    min-height: 100vh;
-    max-width: 1400px;
-    overflow: hidden;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
 
 header {
     position: fixed;
-    top: 0;
-    width: 100%;
-    background-color:  rgb(85, 87, 76);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: rgb(85, 87, 76);
-    font-family: "Prompt", serif;
-    font-weight: 300;
 }
 
 .hero_section {
@@ -37,9 +16,67 @@ header {
     color:  rgb(85, 87, 76);
 }
 
+p {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+span {
+    color: rgb(85, 87, 76);
+    font-size: 50px;
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.hero_wrapper {
+    background: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 820px;
+}
+
+.column_left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.column_left h1{
+    color: rgb(85, 87, 76);
+    font-size: 60px;
+    font-family: "Prompt", serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.column_left p {
+    font-size: 16px;
+    font-family: "Prompt", serif;
+    line-height: 2.3;
+    color: rgb(39, 46, 8);
+}
+
+.column_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 .navbar {
     display: flex;
-    flex-wrap:wrap;
     flex-direction: row;
     font-family: "Open Sans";
     justify-content: space-between;
@@ -48,16 +85,13 @@ header {
     padding: 1rem 2rem;
 }
 
-.logo, nav {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
+.nav{    
+    display: flex;
     flex-direction: row;
+    height: fit-content;
 }
 
 .nav-links {
-    display: flex;
-    justify-content: space-evenly;
     font-family: "Open Sans";
     list-style: none;
     padding: 0;
@@ -67,8 +101,6 @@ header {
 
 .nav-links li {
     margin-left: 20px;
-    flex: 1 0 10%;
-    text-align: center;
 }
 
 .nav-links a {
@@ -84,50 +116,9 @@ header {
     color: #f0a500;
 }
 
-.content {
-    height: 100vh;
-    background-image: url('background.jpg');  
-    background-size: cover;
-    background-position: center;
-    overflow-y: auto;
-    padding-top: 80px;
-    padding-bottom: 80px;
-    color: rgb(34, 34, 34);   
+.hero_img {
+    max-width: 80%;
 }
-
-
-
-.col-port{
-    padding-top: 1vmin;
-    background-color: #f0a500;
-}
-
-.col-lft-p p{
-    background-color: red;
-    display:block;
-    height: fit-content;
-    width: 50%;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-}
-
-.col-rt-p p {
-    font-size: 16px;
-    font-family: "Prompt", serif;
-    line-height: 2.3;
-    color: rgb(39, 46, 8);
-}
-
-.col-rt{
-    background-color: blue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
 
 h2 {
     position: relative;
@@ -143,21 +134,74 @@ ul {
     font-variation-settings: "wdth" 100;
 }
 
-p {
-    font-family: "Open Sans", serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    font-variation-settings: "wdth" 100;
+a:link {
+    color: rgb(90, 120, 90);
+    background-color: transparent;
+    text-decoration: none;
 }
 
-.text-section {
-    padding: 20px;
-    max-width: 50%;
-    margin: auto;
-    border-radius: 8px;
+a:visited {
+    color: rgb(101, 161, 93);
+    background-color: transparent;
+    text-decoration: none;
 }
 
+a:hover {
+    color: rgb(110, 23, 23);
+    font-style: italic;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active {
+    color: rgb(1, 45, 9);
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 16px;
+    background-color: #747a7e;
+}
+
+.footer-container a {
+    color: #f5f6f7;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    
+    &:hover {
+      color: #363636;
+    }
+}
+
+.footer-container ul {
+    display: flex;
+    padding: 0;
+    gap: 24px;
+    list-style-type: none;
+}
+
+.copyright {
+    padding: 4px 0;
+    text-align: center;
+    color: #737574;
+    background-color: #f5f6f7;
+}
+
+.bi-bluesky::before {
+    content: "";
+    background-color: currentColor;
+    -webkit-mask: url("../images/icons/bluesky.svg") no-repeat 50% 50%;
+    mask: url("../images/icons/bluesky.svg") no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    height: 16px;
+    width: 16px;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -173,67 +217,23 @@ p {
     .nav-links li {
         margin: 10px 0;
     }
-    .text-section{
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 100dvh;
-    }
-}
-
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 16px;
-    background-color: #747a7e;
-  }
-  
-  .footer-container a {
-    color: #f5f6f7;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
     
-    &:hover {
-      color: #363636;
+    .hero_wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
     }
-  }
-  
-  .footer-container ul {
-    display: flex;
-    padding: 0;
-    gap: 24px;
-    list-style-type: none;
-  }
-  
-  .copyright {
-    padding: 4px 0;
-    text-align: center;
-    color: #737574;
-    background-color: #f5f6f7;
-  }
-  
-  .bi-bluesky::before {
-    content: "";
-    background-color: currentColor;
-    -webkit-mask: url("../images/icons/bluesky.svg") no-repeat 50% 50%;
-    mask: url("../images/icons/bluesky.svg") no-repeat 50% 50%;
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    height: 16px;
-    width: 16px;
 }
 
 @media (min-width: 900px){
     .header {
         justify-content: space-between;
         padding: 1rem 0;
-        margin: 1 rem auto 2rem auto;
+        margin: 1rem auto 2rem auto;
     }
     .nav-links {
         width: auto;
     }
     .logo {
-        margin: 0 0 0  0.3rem;
+        margin: 0 0 0 0.3rem;
     }
-    }
+}
