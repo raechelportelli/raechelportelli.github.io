@@ -7,13 +7,16 @@
 
 header {
     position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .hero_section {
     size-adjust: initial;
     background: white;
-    padding: 0 60px;
-    color:  rgb(85, 87, 76);
+    padding: 0;
+    color: rgb(85, 87, 76);
 }
 
 p {
@@ -37,14 +40,17 @@ span {
     background: white;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 820px;
+    grid-template-rows: auto;
+    min-height: 100vh;
+    padding-top: 80px;
 }
 
 .column_left {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: flex-start;
+    padding: 40px 60px;
 }
 
 .column_left h1{
@@ -53,12 +59,39 @@ span {
     font-family: "Prompt", serif;
     font-weight: 800;
     font-style: normal;
+    margin-bottom: 20px;
+}
+
+.column_left h2 {
+    color: rgb(85, 87, 76);
+    font-size: 32px;
+    font-family: "Prompt", serif;
+    font-weight: 800;
+    font-style: normal;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 .column_left p {
     font-size: 16px;
     font-family: "Prompt", serif;
     line-height: 2.3;
+    color: rgb(39, 46, 8);
+    margin-bottom: 15px;
+}
+
+.column_left ul {
+    font-family: "Open Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    margin-left: 20px;
+    line-height: 1.8;
+}
+
+.column_left li {
+    margin-bottom: 10px;
     color: rgb(39, 46, 8);
 }
 
@@ -67,6 +100,7 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 40px;
 }
 
 .logo {
@@ -101,6 +135,12 @@ span {
 
 .nav-links li {
     margin-left: 20px;
+}
+
+.nav-links li p {
+    color: white;
+    font-weight: 700;
+    margin: 0;
 }
 
 .nav-links a {
@@ -159,6 +199,10 @@ a:active {
     text-decoration: underline;
 }
 
+footer {
+    width: 100%;
+}
+
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -172,10 +216,10 @@ a:active {
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    
-    &:hover {
-      color: #363636;
-    }
+}
+
+.footer-container a:hover {
+    color: #363636;
 }
 
 .footer-container ul {
@@ -221,6 +265,10 @@ a:active {
     .hero_wrapper {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
+    }
+    
+    .column_left {
+        padding: 20px;
     }
 }
 
