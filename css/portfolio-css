@@ -5,8 +5,19 @@
     font-family: "Open Sans", serif;
 }
 
+body {
+    padding-top: 0;
+    margin: 0;
+}
+
 header {
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #363636;
 }
 
 .hero_section {
@@ -14,6 +25,7 @@ header {
     background: white;
     padding: 0 60px;
     color: rgb(85, 87, 76);
+    margin-top: 70px;
 }
 
 p {
@@ -38,7 +50,7 @@ span {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 820px;
-    padding-top: 80px;
+    padding-top: 100px;
 }
 
 .column_left {
@@ -204,7 +216,7 @@ a:active {
 /* Portfolio Gallery Styles */
 .portfolio_wrapper {
     background: white;
-    padding: 120px 60px 60px 60px;
+    padding: 150px 60px 60px 60px;
     min-height: 100vh;
 }
 
@@ -279,7 +291,7 @@ a:active {
     }
     
     .portfolio_wrapper {
-        padding: 120px 20px 40px 20px;
+        padding: 150px 20px 40px 20px;
     }
     
     .portfolio_wrapper h1 {
