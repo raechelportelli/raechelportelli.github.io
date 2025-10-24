@@ -5,16 +5,27 @@
     font-family: "Open Sans", serif;
 }
 
+/* Add flexbox layout to body */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 header {
     position: fixed;
-    }
-
-
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
 
 .hero_section {
+    flex: 1; /* This makes the hero section grow to fill available space */
     size-adjust:initial;
     background: rgb(232, 228, 161);
     padding: 0 60px;
+    padding-top: 80px; /* Add padding to account for fixed header */
     color:  rgb(85, 87, 76);
 }
 
@@ -25,7 +36,6 @@ p {
     font-style: normal;
     font-variation-settings: "wdth" 100;
 }
-
 
 span {
     color:rgb(232, 228, 161);
@@ -41,7 +51,7 @@ span {
     display: grid;
     grid-template-columns:1fr 1fr;
     grid-template-rows: 820px;
-    }
+}
 
 .column_left {
     display: flex;
@@ -57,7 +67,6 @@ span {
     font-weight: 800;
     font-style: normal;
 }
-
 
 .column_left p {
     font-size: 16px;
@@ -79,7 +88,6 @@ span {
     font-weight: bold;
 }
 
-
 .navbar {
     display: flex;
     flex-direction: row;
@@ -93,7 +101,8 @@ span {
 .nav{    
     display: flex;
     flex-direction:row;
-    height: fit-content;}
+    height: fit-content;
+}
 
 .nav-links {
     font-family: "Open Sans";
@@ -101,7 +110,6 @@ span {
     padding: 0;
     margin: 0;
     display: flex;
-    
 }
 
 .nav-links li {
@@ -121,7 +129,6 @@ span {
     color: #f0a500;
 }
 
-
 span{
     color: rgb(119, 122, 103);
 }
@@ -130,42 +137,45 @@ span{
     max-width: 80%;
 }
 
-
 a:link {
     color: rgb(90, 120, 90);
     background-color: transparent;
     text-decoration: none;
-  }
-  
-  a:visited {
+}
+
+a:visited {
     color: rgb(101, 161, 93);
     background-color: transparent;
     text-decoration: none;
-  }
-  
-  a:hover {
+}
+
+a:hover {
     color: rgb(110, 23, 23);
     font-style: italic;
     background-color: transparent;
     text-decoration: underline;
-  }
-  
-  a:active {
+}
+
+a:active {
     color: rgb(1, 45, 9);
     background-color: transparent;
     text-decoration: underline;
-  }
+}
 
-  
+/* Footer stays at bottom */
+footer {
+    margin-top: auto; /* This pushes footer to bottom if content is short */
+}
+
 .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 16px;
     background-color: rgb(119, 122, 103);
-  }
-  
-  .footer-container a {
+}
+
+.footer-container a {
     color: #f5f6f7;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
@@ -174,23 +184,23 @@ a:link {
     &:hover {
       color: rgb(70, 71, 64);
     }
-  }
-  
-  .footer-container ul {
+}
+
+.footer-container ul {
     display: flex;
     padding: 0;
     gap: 24px;
     list-style-type: none;
-  }
-  
-  .copyright {
+}
+
+.copyright {
     padding: 4px 0;
     text-align: center;
     color: rgb(119, 122, 103);
     background-color: #f5f6f7;
-  }
+}
 
-  .bi-bluesky::before {
+.bi-bluesky::before {
     content: "";
     -webkit-mask: url("../imgs/bsky.svg") no-repeat 50% 50%;
     mask: url("../imgs/bsky.svg") no-repeat 50% 50%;
