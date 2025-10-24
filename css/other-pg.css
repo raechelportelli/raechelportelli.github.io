@@ -45,7 +45,7 @@ span {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    text-align: center;
+    
 }
 
 .column_left h1{
@@ -75,7 +75,6 @@ span {
 .column_right {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
@@ -187,7 +186,6 @@ a:active {
 
 .copyright {
     padding: 4px 0;
-    text-align: center;
     color: #737574;
     background-color: #f5f6f7;
 }
