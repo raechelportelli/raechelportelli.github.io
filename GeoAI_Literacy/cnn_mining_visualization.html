@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Networks for Geospatial Data: Seeing What the Machine Sees</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e;
+            color: #eee;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            border-bottom: 3px solid #e94560;
+        }
+        
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            color: #fff;
+        }
+        
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .crawford-quote {
+            background: rgba(233, 69, 96, 0.1);
+            border-left: 4px solid #e94560;
+            padding: 15px 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            font-style: italic;
+            color: #ccc;
+        }
+        
+        .crawford-quote cite {
+            display: block;
+            margin-top: 10px;
+            font-style: normal;
+            color: #e94560;
+            font-size: 0.9em;
+        }
+        
+        .intro-section {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .intro-section h2 {
+            color: #e94560;
+            margin-top: 0;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: #16213e;
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background: #1f3460;
+            color: #fff;
+        }
+        
+        .tab.active {
+            background: #0f3460;
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+            background: #0f3460;
+            padding: 30px;
+            border-radius: 0 8px 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .visualization-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .image-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .image-panel {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .image-panel h3 {
+            margin: 0 0 10px 0;
+            color: #e94560;
+            font-size: 1em;
+        }
+        
+        .image-panel img, .image-panel canvas {
+            max-width: 100%;
+            border-radius: 4px;
+            border: 2px solid #0f3460;
+        }
+        
+        .image-panel .caption {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 8px;
+        }
+        
+        .layer-selector {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .layer-selector h3 {
+            margin: 0 0 15px 0;
+            color: #fff;
+        }
+        
+        .layer-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .layer-btn {
+            padding: 10px 20px;
+            background: #1a1a2e;
+            border: 2px solid #0f3460;
+            color: #aaa;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+        
+        .layer-btn:hover {
+            border-color: #e94560;
+            color: #fff;
+        }
+        
+        .layer-btn.active {
+            background: #e94560;
+            border-color: #e94560;
+            color: #fff;
+        }
+        
+        .layer-info {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        .layer-info h4 {
+            margin: 0 0 10px 0;
+            color: #e94560;
+        }
+        
+        .feature-maps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .feature-map {
+            background: #1a1a2e;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .feature-map canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+        }
+        
+        .feature-map .label {
+            font-size: 0.75em;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 900px) {
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .comparison-panel {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .comparison-panel h3 {
+            color: #e94560;
+            margin-top: 0;
+        }
+        
+        .network-diagram {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .network-flow {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            min-width: 800px;
+        }
+        
+        .network-layer {
+            text-align: center;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 8px;
+            min-width: 100px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .network-layer:hover {
+            border-color: #e94560;
+        }
+        
+        .network-layer.active {
+            border-color: #e94560;
+            background: #0f3460;
+        }
+        
+        .network-layer .layer-name {
+            font-weight: bold;
+            color: #fff;
+            font-size: 0.85em;
+        }
+        
+        .network-layer .layer-dims {
+            font-size: 0.75em;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .network-arrow {
+            color: #e94560;
+            font-size: 1.5em;
+        }
+        
+        .explanation-box {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .explanation-box h4 {
+            color: #e94560;
+            margin: 0 0 10px 0;
+        }
+        
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-box .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #e94560;
+        }
+        
+        .stat-box .label {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .context-section {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .context-section h2 {
+            color: #e94560;
+            margin-top: 0;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        a {
+            color: #e94560;
+        }
+        
+        .slider-container {
+            margin: 20px 0;
+        }
+        
+        .slider-container label {
+            display: block;
+            margin-bottom: 10px;
+            color: #aaa;
+        }
+        
+        .slider-container input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: #1a1a2e;
+            outline: none;
+        }
+        
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e94560;
+            cursor: pointer;
+        }
+        
+        .detection-overlay {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .detection-box {
+            position: absolute;
+            border: 3px solid #e94560;
+            background: rgba(233, 69, 96, 0.2);
+            pointer-events: none;
+        }
+        
+        .detection-label {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            background: #e94560;
+            color: #fff;
+            padding: 2px 8px;
+            font-size: 0.8em;
+            border-radius: 3px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 1px solid #0f3460;
+            color: #666;
+        }
+        
+        footer a {
+            color: #e94560;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #1a1a2e;
+            border-top: 4px solid #e94560;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .highlight {
+            background: rgba(233, 69, 96, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Neural Networks for Geospatial Data</h1>
+        <p class="subtitle">Seeing What the Machine Sees: CNN Layer Visualization for Mining Detection</p>
+        <div class="crawford-quote">
+            "The rhetoric of 'the cloud' implies something lightweight and ethereal, floating above the material world... But the cloud is not weightless; it is made of rock and mineral."
+            <cite>— Kate Crawford, Atlas of AI (2021), Chapter 3: "Earth"</cite>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro-section">
+            <h2>What You're About to Explore</h2>
+            <p>This interactive demonstration shows how <strong>Convolutional Neural Networks (CNNs)</strong> process satellite imagery to detect mining operations. You'll see how the same image is transformed as it passes through different layers of the network—from detecting simple edges and textures to recognizing complex features like open-pit mines, tailings ponds, and processing facilities.</p>
+            <p>The default imagery simulates the <strong>Bayan Obo Mining District</strong> in Inner Mongolia, China—the world's largest rare earth mine, producing elements essential for smartphones, electric vehicles, and the AI systems that process these very images.</p>
+            
+            <div class="explanation-box" style="margin-top: 20px;">
+                <h4>📷 Use Real Satellite Imagery</h4>
+                <p>For the best experience, download actual satellite imagery of Bayan Obo and upload it here:</p>
+                <div style="margin: 15px 0;">
+                    <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(event)" 
+                           style="display: none;">
+                    <button onclick="document.getElementById('imageUpload').click()" 
+                            style="padding: 10px 20px; background: #e94560; border: none; color: white; 
+                                   border-radius: 6px; cursor: pointer; font-size: 1em;">
+                        Upload Satellite Image
+                    </button>
+                </div>
+                <p id="imageSourceInfo" style="font-size: 0.9em; color: #888;">Currently using: Simulated imagery based on NASA ASTER characteristics</p>
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #e94560;">Where to get real Bayan Obo imagery →</summary>
+                    <div style="padding: 10px 0; font-size: 0.9em;">
+                        <ol>
+                            <li><strong>NASA Earth Observatory</strong>: Visit <a href="https://earthobservatory.nasa.gov/images/77723/rare-earth-in-bayan-obo" target="_blank">earthobservatory.nasa.gov/images/77723</a> and download the JPEG image</li>
+                            <li><strong>Copernicus Browser</strong>: Go to <a href="https://browser.dataspace.copernicus.eu/" target="_blank">browser.dataspace.copernicus.eu</a>, search for coordinates 41.8°N, 109.97°E, and download Sentinel-2 imagery</li>
+                            <li><strong>USGS Earth Explorer</strong>: Visit <a href="https://earthexplorer.usgs.gov/" target="_blank">earthexplorer.usgs.gov</a> for Landsat imagery</li>
+                        </ol>
+                        <p><em>Tip: False-color composites (like NASA's ASTER images) show vegetation as red, which makes mining features more visible.</em></p>
+                    </div>
+                </details>
+            </div>
+        </section>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('explore')">🔍 Explore Layers</button>
+            <button class="tab" onclick="showTab('compare')">⚖️ Compare Depths</button>
+            <button class="tab" onclick="showTab('detection')">🎯 Detection Demo</button>
+            <button class="tab" onclick="showTab('context')">📚 Critical Context</button>
+        </div>
+        
+        <!-- TAB 1: EXPLORE LAYERS -->
+        <div id="explore" class="tab-content active">
+            <h2>Explore CNN Layers</h2>
+            <p>Click on different layers to see how the network transforms the satellite image at each stage. Early layers detect simple features; deeper layers recognize complex patterns.</p>
+            
+            <div class="network-diagram">
+                <h3>Network Architecture</h3>
+                <div class="network-flow">
+                    <div class="network-layer active" onclick="selectLayer(0)" id="layer-0">
+                        <div class="layer-name">Input</div>
+                        <div class="layer-dims">256×256×3</div>
+                    </div>
+                    <div class="network-arrow">→</div>
+                    <div class="network-layer" onclick="selectLayer(1)" id="layer-1">
+                        <div class="layer-name">Conv1</div>
+                        <div class="layer-dims">254×254×32</div>
+                    </div>
+                    <div class="network-arrow">→</div>
+                    <div class="network-layer" onclick="selectLayer(2)" id="layer-2">
+                        <div class="layer-name">Pool1</div>
+                        <div class="layer-dims">127×127×32</div>
+                    </div>
+                    <div class="network-arrow">→</div>
+                    <div class="network-layer" onclick="selectLayer(3)" id="layer-3">
+                        <div class="layer-name">Conv2</div>
+                        <div class="layer-dims">125×125×64</div>
+                    </div>
+                    <div class="network-arrow">→</div>
+                    <div class="network-layer" onclick="selectLayer(4)" id="layer-4">
+                        <div class="layer-name">Pool2</div>
+                        <div class="layer-dims">62×62×64</div>
+                    </div>
+                    <div class="network-arrow">→</div>
+                    <div class="network-layer" onclick="selectLayer(5)" id="layer-5">
+                        <div class="layer-name">Conv3</div>
+                        <div class="layer-dims">60×60×128</div>
+                    </div>
+                    <div class="network-arrow">→</div>
+                    <div class="network-layer" onclick="selectLayer(6)" id="layer-6">
+                        <div class="layer-name">Output</div>
+                        <div class="layer-dims">Classification</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="visualization-container">
+                <div class="image-row">
+                    <div class="image-panel">
+                        <h3>Original Satellite Image</h3>
+                        <canvas id="originalImage" width="256" height="256"></canvas>
+                        <p class="caption">Simulated ASTER false-color composite<br>Vegetation=red, Water=green, Rock=black</p>
+                    </div>
+                    <div class="image-panel">
+                        <h3 id="layerTitle">Input Layer</h3>
+                        <canvas id="layerOutput" width="256" height="256"></canvas>
+                        <p class="caption" id="layerCaption">Raw RGB satellite imagery</p>
+                    </div>
+                </div>
+                
+                <div class="layer-info" id="layerInfo">
+                    <h4>Input Layer: Raw Image</h4>
+                    <p>This is the original satellite image as it enters the neural network. The image contains 3 channels (Red, Green, Blue) with pixel values ranging from 0-255. The network will learn to extract increasingly abstract features from this raw data.</p>
+                    <div class="stats-panel">
+                        <div class="stat-box">
+                            <div class="value">256</div>
+                            <div class="label">Width (px)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">256</div>
+                            <div class="label">Height (px)</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">3</div>
+                            <div class="label">Channels</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">196,608</div>
+                            <div class="label">Total Values</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="featureMapsSection" style="display: none;">
+                    <h3>Sample Feature Maps</h3>
+                    <p>Each feature map shows what one filter in this layer "sees." Click on any feature map to enlarge.</p>
+                    <div class="feature-maps-grid" id="featureMaps"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 2: COMPARE DEPTHS -->
+        <div id="compare" class="tab-content">
+            <h2>Compare Layer Depths</h2>
+            <p>This view shows all layers side-by-side so you can see the progression from simple edge detection to complex feature recognition.</p>
+            
+            <div class="explanation-box">
+                <h4>What Changes at Each Layer?</h4>
+                <p><strong>Early layers</strong> (Conv1, Pool1) detect low-level features: edges, textures, color gradients. These are the building blocks that any image might contain.</p>
+                <p><strong>Middle layers</strong> (Conv2, Pool2) combine those building blocks into mid-level features: shapes, patterns, distinctive color combinations that might indicate bare earth vs. vegetation vs. water.</p>
+                <p><strong>Deep layers</strong> (Conv3) recognize high-level, task-specific features: the circular shape of open-pit mines, the geometric patterns of tailings ponds, the characteristic colors of mineral extraction.</p>
+            </div>
+            
+            <div class="comparison-section">
+                <div class="comparison-panel">
+                    <h3>Early Layer (Conv1): Edge Detection</h3>
+                    <canvas id="compareEarly" width="200" height="200"></canvas>
+                    <p>Detects: Edges, boundaries, simple gradients</p>
+                    <p class="caption">At this stage, the network doesn't "know" it's looking at a mine—it only sees lines and edges.</p>
+                </div>
+                <div class="comparison-panel">
+                    <h3>Deep Layer (Conv3): Feature Recognition</h3>
+                    <canvas id="compareDeep" width="200" height="200"></canvas>
+                    <p>Detects: Complex shapes, mine-specific patterns</p>
+                    <p class="caption">Here the network activates strongly on features characteristic of mining operations.</p>
+                </div>
+            </div>
+            
+            <div class="slider-container">
+                <label>Blend between early and deep layer visualization:</label>
+                <input type="range" id="depthSlider" min="0" max="100" value="50" oninput="updateDepthBlend()">
+                <div style="display: flex; justify-content: space-between; color: #888; font-size: 0.85em;">
+                    <span>Early (edges)</span>
+                    <span>Deep (features)</span>
+                </div>
+            </div>
+            
+            <div class="image-panel" style="margin-top: 20px;">
+                <h3>Blended Visualization</h3>
+                <canvas id="blendedOutput" width="256" height="256"></canvas>
+                <p class="caption" id="blendCaption">50% early layer, 50% deep layer</p>
+            </div>
+        </div>
+        
+        <!-- TAB 3: DETECTION DEMO -->
+        <div id="detection" class="tab-content">
+            <h2>Detection in Action</h2>
+            <p>See how a trained CNN identifies different mining-related features in the satellite imagery.</p>
+            
+            <div class="image-row">
+                <div class="image-panel">
+                    <h3>Input Image</h3>
+                    <canvas id="detectionInput" width="300" height="300"></canvas>
+                </div>
+                <div class="image-panel">
+                    <h3>CNN Detections</h3>
+                    <div class="detection-overlay">
+                        <canvas id="detectionOutput" width="300" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="explanation-box">
+                <h4>What the Network Detected</h4>
+                <div id="detectionResults">
+                    <p>Loading detection results...</p>
+                </div>
+            </div>
+            
+            <div class="stats-panel">
+                <div class="stat-box">
+                    <div class="value" id="detectMines">2</div>
+                    <div class="label">Open Pit Mines</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value" id="detectTailings">3</div>
+                    <div class="label">Tailings Ponds</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value" id="detectProcessing">1</div>
+                    <div class="label">Processing Areas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value" id="detectConfidence">94.2%</div>
+                    <div class="label">Avg Confidence</div>
+                </div>
+            </div>
+            
+            <div class="context-section" style="margin-top: 20px;">
+                <h3>The Purpose Behind Detection</h3>
+                <p>CNNs like this one are used by governments, corporations, and researchers to:</p>
+                <ul>
+                    <li><strong>Monitor environmental compliance</strong> — Detecting illegal mining or expansion beyond permitted boundaries</li>
+                    <li><strong>Assess environmental impact</strong> — Tracking tailings pond growth, vegetation loss, water contamination</li>
+                    <li><strong>Optimize extraction</strong> — Helping mining companies identify promising deposits</li>
+                    <li><strong>Track global resource flows</strong> — Understanding supply chains for critical minerals</li>
+                </ul>
+                <p>Each of these purposes carries different implications for who benefits and who bears the costs of this surveillance capacity.</p>
+            </div>
+        </div>
+        
+        <!-- TAB 4: CRITICAL CONTEXT -->
+        <div id="context" class="tab-content">
+            <h2>Critical Context: The Material Cost of AI</h2>
+            
+            <div class="two-column">
+                <div>
+                    <h3>The Recursive Loop</h3>
+                    <p>The AI system you're using to learn about mining detection is itself dependent on the mining it detects. Every neural network requires:</p>
+                    <ul>
+                        <li><strong>Rare earth elements</strong> in computer chips and displays</li>
+                        <li><strong>Lithium and cobalt</strong> in batteries</li>
+                        <li><strong>Copper and gold</strong> in wiring and connectors</li>
+                        <li><strong>Silicon</strong> refined from quartz sand</li>
+                    </ul>
+                    <p>Crawford calls this the <span class="highlight">"strange loop"</span> of AI: systems that require extraction are used to optimize further extraction.</p>
+                </div>
+                <div>
+                    <h3>Bayan Obo by the Numbers</h3>
+                    <div class="stats-panel">
+                        <div class="stat-box">
+                            <div class="value">70%</div>
+                            <div class="label">of China's rare earths</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">~45%</div>
+                            <div class="label">of global production</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">2,000</div>
+                            <div class="label">tons toxic waste per ton REE</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="value">48 km²</div>
+                            <div class="label">mining district area</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="crawford-quote" style="margin-top: 30px;">
+                "To understand the full environmental cost of AI, we need to recognize that it begins with the physical extraction of materials from the Earth... The cloud is made of mines."
+                <cite>— Kate Crawford, Atlas of AI (2021)</cite>
+            </div>
+            
+            <div class="explanation-box">
+                <h4>Questions for Reflection</h4>
+                <ol>
+                    <li>Who decides what neural networks are trained to detect? What gets left out?</li>
+                    <li>How might automated mining detection change power dynamics between corporations, governments, and local communities?</li>
+                    <li>What are the ethical implications of using AI to optimize extraction of the very materials AI requires?</li>
+                    <li>How does the "invisibility" of neural network decision-making affect accountability for environmental monitoring?</li>
+                </ol>
+            </div>
+            
+            <h3>Learn More</h3>
+            <ul>
+                <li><a href="https://earthobservatory.nasa.gov/images/77723/rare-earth-in-bayan-obo" target="_blank">NASA Earth Observatory: Rare Earth in Bayan Obo</a></li>
+                <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7731393/" target="_blank">Mining and Tailings Dam Detection in Satellite Imagery Using Deep Learning (PMC)</a></li>
+                <li><a href="https://poloclub.github.io/cnn-explainer/" target="_blank">CNN Explainer: Interactive Visualization Tool (Georgia Tech)</a></li>
+                <li><a href="https://github.com/satellite-image-deep-learning/techniques" target="_blank">Satellite Image Deep Learning Techniques (GitHub)</a></li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>GGIS 427: GeoAI Literacy | Lab: Neural Networks for Geospatial Data</p>
+            <p>This demonstration uses simulated CNN outputs for educational purposes.<br>
+            For hands-on implementation, see the accompanying Jupyter notebook.</p>
+            <p>Satellite imagery concept based on <a href="https://earthobservatory.nasa.gov/images/77723/rare-earth-in-bayan-obo" target="_blank">NASA Earth Observatory</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // ============================================
+        // CNN LAYER VISUALIZATION
+        // Based on NASA ASTER imagery characteristics of Bayan Obo
+        // False-color composite: vegetation=red, water=green, rock=black/dark
+        // ============================================
+        
+        // Allow users to load their own satellite imagery
+        let userImage = null;
+        
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        userImage = img;
+                        redrawWithUserImage();
+                        document.getElementById('imageSourceInfo').innerHTML = 
+                            '<strong>Using uploaded image:</strong> ' + file.name;
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function redrawWithUserImage() {
+            if (!userImage) return;
+            
+            const canvas = document.getElementById('originalImage');
+            const ctx = canvas.getContext('2d');
+            
+            // Draw user image scaled to fit
+            ctx.drawImage(userImage, 0, 0, canvas.width, canvas.height);
+            baseImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            // Update all visualizations
+            updateLayerVisualization();
+            initComparisonView();
+            initDetectionView();
+        }
+        
+        const layerInfo = {
+            0: {
+                name: "Input Layer: Raw Image",
+                description: "This is the original satellite image as it enters the neural network. The image contains 3 channels (Red, Green, Blue) with pixel values ranging from 0-255. The network will learn to extract increasingly abstract features from this raw data.",
+                stats: { width: 256, height: 256, channels: 3, total: "196,608" },
+                caption: "Raw RGB satellite imagery"
+            },
+            1: {
+                name: "Conv1: Edge Detection",
+                description: "The first convolutional layer applies 32 different filters to detect basic features like edges, lines, and color boundaries. Each filter responds to a different pattern. Notice how the output highlights boundaries between different surface types.",
+                stats: { width: 254, height: 254, channels: 32, total: "2,064,512" },
+                caption: "32 feature maps detecting edges and gradients"
+            },
+            2: {
+                name: "Pool1: Spatial Reduction",
+                description: "Max pooling reduces spatial dimensions by half, keeping only the strongest activations in each region. This makes the representation more compact and helps the network become invariant to small translations.",
+                stats: { width: 127, height: 127, channels: 32, total: "516,128" },
+                caption: "Downsampled to retain strongest features"
+            },
+            3: {
+                name: "Conv2: Shape Detection", 
+                description: "The second convolutional layer combines edge detections from Conv1 to recognize more complex shapes: curves, corners, texture patterns. The network is beginning to see 'parts' of objects rather than just edges.",
+                stats: { width: 125, height: 125, channels: 64, total: "1,000,000" },
+                caption: "64 feature maps detecting shapes and textures"
+            },
+            4: {
+                name: "Pool2: Further Reduction",
+                description: "Another pooling layer further reduces spatial dimensions. At this point, each 'pixel' in the feature maps corresponds to a larger region of the original image.",
+                stats: { width: 62, height: 62, channels: 64, total: "246,016" },
+                caption: "Compact representation of mid-level features"
+            },
+            5: {
+                name: "Conv3: Semantic Features",
+                description: "Deep convolutional layers detect high-level, task-specific features. For mining detection, these might include circular pit shapes, rectangular pond geometries, or the characteristic color patterns of tailings. The network 'understands' what it's looking at.",
+                stats: { width: 60, height: 60, channels: 128, total: "460,800" },
+                caption: "128 feature maps detecting mining-specific patterns"
+            },
+            6: {
+                name: "Output: Classification",
+                description: "The final layers flatten the feature maps and pass them through fully-connected layers to produce classification probabilities. The network outputs confidence scores for different classes: mine, tailings pond, processing facility, natural terrain.",
+                stats: { width: 1, height: 1, channels: 4, total: "4" },
+                caption: "Class probabilities for detection"
+            }
+        };
+        
+        // Current state
+        let currentLayer = 0;
+        let baseImageData = null;
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            generateSyntheticMiningImage();
+            updateLayerVisualization();
+            initComparisonView();
+            initDetectionView();
+        });
+        
+        // Generate synthetic mining-like satellite image
+        // Based on NASA ASTER false-color: vegetation=red, water=green, rock=black, grassland=light brown
+        function generateSyntheticMiningImage() {
+            const canvas = document.getElementById('originalImage');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Create image data
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            
+            // Perlin-like noise function for terrain variation
+            function noise(x, y, scale) {
+                return (Math.sin(x * scale) * Math.cos(y * scale * 0.7) + 
+                        Math.sin(x * scale * 1.3 + 1) * Math.cos(y * scale * 0.9 + 2)) * 0.5;
+            }
+            
+            // Generate terrain
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    
+                    // Base: semi-arid grassland (light brown in false-color)
+                    const terrainNoise = noise(x, y, 0.05) * 20 + noise(x, y, 0.15) * 10;
+                    let r = 160 + terrainNoise + Math.random() * 15;
+                    let g = 140 + terrainNoise * 0.8 + Math.random() * 12;
+                    let b = 100 + terrainNoise * 0.5 + Math.random() * 10;
+                    
+                    // Main open pit mine (circular, dark/black rocks)
+                    const dist1 = Math.sqrt(Math.pow(x - 90, 2) + Math.pow(y - 110, 2));
+                    if (dist1 < 50) {
+                        const depth = 1 - dist1 / 50;
+                        // Dark rock coloring
+                        r = 35 + depth * 25 + Math.random() * 10;
+                        g = 30 + depth * 20 + Math.random() * 8;
+                        b = 28 + depth * 18 + Math.random() * 8;
+                        // Concentric terracing rings
+                        const ringPhase = (dist1 % 12);
+                        if (ringPhase < 3) {
+                            r += 15;
+                            g += 12;
+                            b += 10;
+                        }
+                    }
+                    
+                    // East open pit mine (second circular pit)
+                    const dist2 = Math.sqrt(Math.pow(x - 175, 2) + Math.pow(y - 95, 2));
+                    if (dist2 < 38) {
+                        const depth = 1 - dist2 / 38;
+                        r = 40 + depth * 30 + Math.random() * 10;
+                        g = 35 + depth * 25 + Math.random() * 8;
+                        b = 32 + depth * 22 + Math.random() * 8;
+                        const ringPhase = (dist2 % 10);
+                        if (ringPhase < 2.5) {
+                            r += 12;
+                            g += 10;
+                            b += 8;
+                        }
+                    }
+                    
+                    // Tailings ponds (green in false-color - water surfaces)
+                    // Pond 1 - large rectangular
+                    if (x > 130 && x < 200 && y > 155 && y < 195) {
+                        const waterNoise = Math.random() * 15;
+                        r = 70 + waterNoise;
+                        g = 120 + waterNoise + 20;  // Green tint for water
+                        b = 85 + waterNoise;
+                        // Darker edges
+                        if (x < 135 || x > 195 || y < 160 || y > 190) {
+                            r -= 15; g -= 10; b -= 10;
+                        }
+                    }
+                    
+                    // Pond 2 - irregular shape
+                    if (x > 35 && x < 95 && y > 165 && y < 210) {
+                        const inPond = (x - 65) * (x - 65) / 900 + (y - 187) * (y - 187) / 500 < 1;
+                        if (inPond) {
+                            const waterNoise = Math.random() * 12;
+                            r = 65 + waterNoise;
+                            g = 115 + waterNoise + 15;
+                            b = 80 + waterNoise;
+                        }
+                    }
+                    
+                    // Tailings piles (lighter colored mounds)
+                    const pile1Dist = Math.sqrt(Math.pow(x - 120, 2) + Math.pow(y - 140, 2));
+                    if (pile1Dist < 20) {
+                        r = 180 + Math.random() * 20;
+                        g = 165 + Math.random() * 18;
+                        b = 140 + Math.random() * 15;
+                    }
+                    
+                    const pile2Dist = Math.sqrt(Math.pow(x - 210, 2) + Math.pow(y - 130, 2));
+                    if (pile2Dist < 15) {
+                        r = 175 + Math.random() * 18;
+                        g = 160 + Math.random() * 15;
+                        b = 135 + Math.random() * 12;
+                    }
+                    
+                    // Processing facility (geometric structures)
+                    if (x > 185 && x < 245 && y > 185 && y < 235) {
+                        r = 140 + Math.random() * 15;
+                        g = 135 + Math.random() * 12;
+                        b = 125 + Math.random() * 10;
+                        // Grid pattern (buildings/structures)
+                        if (x % 12 < 2 || y % 12 < 2) {
+                            r = 90; g = 85; b = 80;
+                        }
+                    }
+                    
+                    // Vegetation patches (RED in false-color - key ASTER characteristic)
+                    // Patch 1
+                    if (x > 5 && x < 45 && y > 15 && y < 55) {
+                        const vegDist = Math.sqrt(Math.pow(x - 25, 2) + Math.pow(y - 35, 2));
+                        if (vegDist < 22 + Math.sin(x * 0.3) * 5) {
+                            r = 180 + Math.random() * 40;  // RED for vegetation
+                            g = 60 + Math.random() * 25;
+                            b = 55 + Math.random() * 20;
+                        }
+                    }
+                    
+                    // Patch 2 (sparse vegetation)
+                    if (x > 220 && x < 255 && y > 40 && y < 75) {
+                        const vegNoise = noise(x, y, 0.2);
+                        if (vegNoise > 0) {
+                            r = 160 + Math.random() * 35;
+                            g = 65 + Math.random() * 20;
+                            b = 60 + Math.random() * 15;
+                        }
+                    }
+                    
+                    // Roads/access paths (lighter lines)
+                    // Main access road
+                    if (Math.abs(y - (x * 0.25 + 60)) < 3) {
+                        r = 145; g = 138; b = 125;
+                    }
+                    // Secondary road
+                    if (Math.abs(x - 150) < 2 && y > 100 && y < 180) {
+                        r = 142; g = 135; b = 122;
+                    }
+                    
+                    data[idx] = Math.min(255, Math.max(0, r));
+                    data[idx + 1] = Math.min(255, Math.max(0, g));
+                    data[idx + 2] = Math.min(255, Math.max(0, b));
+                    data[idx + 3] = 255;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            baseImageData = imageData;
+        }
+        
+        // Tab switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // Layer selection
+        function selectLayer(layerNum) {
+            currentLayer = layerNum;
+            
+            // Update visual selection
+            document.querySelectorAll('.network-layer').forEach(l => l.classList.remove('active'));
+            document.getElementById('layer-' + layerNum).classList.add('active');
+            
+            updateLayerVisualization();
+        }
+        
+        // Update layer visualization
+        function updateLayerVisualization() {
+            const info = layerInfo[currentLayer];
+            const canvas = document.getElementById('layerOutput');
+            const ctx = canvas.getContext('2d');
+            
+            // Update info panel
+            document.getElementById('layerTitle').textContent = info.name.split(':')[0];
+            document.getElementById('layerCaption').textContent = info.caption;
+            
+            document.getElementById('layerInfo').innerHTML = `
+                <h4>${info.name}</h4>
+                <p>${info.description}</p>
+                <div class="stats-panel">
+                    <div class="stat-box">
+                        <div class="value">${info.stats.width}</div>
+                        <div class="label">Width</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="value">${info.stats.height}</div>
+                        <div class="label">Height</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="value">${info.stats.channels}</div>
+                        <div class="label">Channels/Filters</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="value">${info.stats.total}</div>
+                        <div class="label">Total Values</div>
+                    </div>
+                </div>
+            `;
+            
+            // Generate visualization based on layer
+            if (currentLayer === 0) {
+                // Show original image
+                ctx.putImageData(baseImageData, 0, 0);
+                document.getElementById('featureMapsSection').style.display = 'none';
+            } else if (currentLayer === 6) {
+                // Show classification output
+                showClassificationOutput(ctx);
+                document.getElementById('featureMapsSection').style.display = 'none';
+            } else {
+                // Show processed layer
+                applyLayerEffect(ctx, currentLayer);
+                document.getElementById('featureMapsSection').style.display = 'block';
+                generateFeatureMaps(currentLayer);
+            }
+        }
+        
+        // Apply visual effects to simulate CNN layer outputs
+        function applyLayerEffect(ctx, layer) {
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Copy base image
+            ctx.putImageData(baseImageData, 0, 0);
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            
+            switch(layer) {
+                case 1: // Conv1 - Edge detection
+                    applyEdgeDetection(data, width, height);
+                    break;
+                case 2: // Pool1 - Downsampled edges
+                    applyEdgeDetection(data, width, height);
+                    applyPoolingEffect(data, width, height);
+                    break;
+                case 3: // Conv2 - Shape detection
+                    applyShapeDetection(data, width, height);
+                    break;
+                case 4: // Pool2 - Downsampled shapes
+                    applyShapeDetection(data, width, height);
+                    applyPoolingEffect(data, width, height);
+                    break;
+                case 5: // Conv3 - Semantic features
+                    applySemanticDetection(data, width, height);
+                    break;
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        // Simulate edge detection (Sobel-like)
+        function applyEdgeDetection(data, width, height) {
+            const copy = new Uint8ClampedArray(data);
+            
+            for (let y = 1; y < height - 1; y++) {
+                for (let x = 1; x < width - 1; x++) {
+                    const idx = (y * width + x) * 4;
+                    
+                    // Get surrounding pixels (grayscale)
+                    const getGray = (ox, oy) => {
+                        const i = ((y + oy) * width + (x + ox)) * 4;
+                        return (copy[i] + copy[i+1] + copy[i+2]) / 3;
+                    };
+                    
+                    // Sobel kernels
+                    const gx = -getGray(-1,-1) + getGray(1,-1) - 2*getGray(-1,0) + 2*getGray(1,0) - getGray(-1,1) + getGray(1,1);
+                    const gy = -getGray(-1,-1) - 2*getGray(0,-1) - getGray(1,-1) + getGray(-1,1) + 2*getGray(0,1) + getGray(1,1);
+                    
+                    const magnitude = Math.min(255, Math.sqrt(gx*gx + gy*gy));
+                    
+                    // Color code by direction
+                    const angle = Math.atan2(gy, gx);
+                    data[idx] = magnitude * (0.5 + 0.5 * Math.cos(angle));
+                    data[idx + 1] = magnitude * (0.5 + 0.5 * Math.sin(angle));
+                    data[idx + 2] = magnitude * 0.5;
+                }
+            }
+        }
+        
+        // Simulate pooling (blocky effect)
+        function applyPoolingEffect(data, width, height) {
+            const blockSize = 4;
+            for (let y = 0; y < height; y += blockSize) {
+                for (let x = 0; x < width; x += blockSize) {
+                    // Find max in block
+                    let maxR = 0, maxG = 0, maxB = 0;
+                    for (let dy = 0; dy < blockSize && y + dy < height; dy++) {
+                        for (let dx = 0; dx < blockSize && x + dx < width; dx++) {
+                            const idx = ((y + dy) * width + (x + dx)) * 4;
+                            maxR = Math.max(maxR, data[idx]);
+                            maxG = Math.max(maxG, data[idx + 1]);
+                            maxB = Math.max(maxB, data[idx + 2]);
+                        }
+                    }
+                    // Apply max to block
+                    for (let dy = 0; dy < blockSize && y + dy < height; dy++) {
+                        for (let dx = 0; dx < blockSize && x + dx < width; dx++) {
+                            const idx = ((y + dy) * width + (x + dx)) * 4;
+                            data[idx] = maxR;
+                            data[idx + 1] = maxG;
+                            data[idx + 2] = maxB;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Simulate shape detection
+        function applyShapeDetection(data, width, height) {
+            const copy = new Uint8ClampedArray(data);
+            
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    
+                    // Detect circular patterns (for mine pits)
+                    const dist1 = Math.sqrt(Math.pow(x - 80, 2) + Math.pow(y - 100, 2));
+                    const dist2 = Math.sqrt(Math.pow(x - 180, 2) + Math.pow(y - 80, 2));
+                    
+                    let activation = 0;
+                    
+                    // Circular detector
+                    if (Math.abs(dist1 - 40) < 10 || Math.abs(dist2 - 30) < 10) {
+                        activation += 200;
+                    }
+                    
+                    // Rectangle detector (for ponds/facilities)
+                    if ((x > 138 && x < 212 && (Math.abs(y - 150) < 5 || Math.abs(y - 200) < 5)) ||
+                        (y > 148 && y < 202 && (Math.abs(x - 140) < 5 || Math.abs(x - 210) < 5))) {
+                        activation += 180;
+                    }
+                    
+                    if ((x > 178 && x < 242 && (Math.abs(y - 180) < 5 || Math.abs(y - 230) < 5)) ||
+                        (y > 178 && y < 232 && (Math.abs(x - 180) < 5 || Math.abs(x - 240) < 5))) {
+                        activation += 180;
+                    }
+                    
+                    // Blend with original
+                    const gray = (copy[idx] + copy[idx+1] + copy[idx+2]) / 3;
+                    data[idx] = Math.min(255, activation + gray * 0.3);
+                    data[idx + 1] = Math.min(255, gray * 0.3);
+                    data[idx + 2] = Math.min(255, activation * 0.5 + gray * 0.3);
+                }
+            }
+        }
+        
+        // Simulate semantic/high-level feature detection
+        function applySemanticDetection(data, width, height) {
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    
+                    let mineActivation = 0;
+                    let tailingsActivation = 0;
+                    let facilityActivation = 0;
+                    
+                    // Mine detector (circular areas) - updated positions
+                    const dist1 = Math.sqrt(Math.pow(x - 90, 2) + Math.pow(y - 110, 2));
+                    const dist2 = Math.sqrt(Math.pow(x - 175, 2) + Math.pow(y - 95, 2));
+                    if (dist1 < 55) mineActivation = 255 * (1 - dist1/55);
+                    if (dist2 < 43) mineActivation = Math.max(mineActivation, 255 * (1 - dist2/43));
+                    
+                    // Tailings detector (water bodies)
+                    if (x > 130 && x < 200 && y > 155 && y < 195) tailingsActivation = 200;
+                    if (x > 35 && x < 95 && y > 165 && y < 210) {
+                        const inPond = (x - 65) * (x - 65) / 900 + (y - 187) * (y - 187) / 500 < 1;
+                        if (inPond) tailingsActivation = Math.max(tailingsActivation, 180);
+                    }
+                    
+                    // Facility detector
+                    if (x > 185 && x < 245 && y > 185 && y < 235) facilityActivation = 220;
+                    
+                    // Color code by feature type
+                    data[idx] = Math.min(255, mineActivation);     // Red = mines
+                    data[idx + 1] = Math.min(255, tailingsActivation); // Green = tailings
+                    data[idx + 2] = Math.min(255, facilityActivation); // Blue = facilities
+                }
+            }
+        }
+        
+        // Show classification output
+        function showClassificationOutput(ctx) {
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw classification bars
+            const classes = [
+                { name: 'Open Pit Mine', prob: 0.89, color: '#e94560' },
+                { name: 'Tailings Pond', prob: 0.76, color: '#4ecca3' },
+                { name: 'Processing Facility', prob: 0.68, color: '#00adb5' },
+                { name: 'Natural Terrain', prob: 0.12, color: '#888' }
+            ];
+            
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'left';
+            
+            classes.forEach((cls, i) => {
+                const y = 50 + i * 50;
+                
+                // Label
+                ctx.fillStyle = '#fff';
+                ctx.fillText(cls.name, 20, y);
+                
+                // Bar background
+                ctx.fillStyle = '#0f3460';
+                ctx.fillRect(20, y + 8, 200, 20);
+                
+                // Bar fill
+                ctx.fillStyle = cls.color;
+                ctx.fillRect(20, y + 8, 200 * cls.prob, 20);
+                
+                // Probability
+                ctx.fillStyle = '#fff';
+                ctx.fillText((cls.prob * 100).toFixed(1) + '%', 230, y + 23);
+            });
+        }
+        
+        // Generate feature map thumbnails
+        function generateFeatureMaps(layer) {
+            const container = document.getElementById('featureMaps');
+            const numMaps = layer <= 2 ? 8 : (layer <= 4 ? 12 : 16);
+            
+            container.innerHTML = '';
+            
+            for (let i = 0; i < numMaps; i++) {
+                const div = document.createElement('div');
+                div.className = 'feature-map';
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                
+                generateSingleFeatureMap(canvas, layer, i);
+                
+                div.appendChild(canvas);
+                
+                const label = document.createElement('div');
+                label.className = 'label';
+                label.textContent = `Filter ${i + 1}`;
+                div.appendChild(label);
+                
+                container.appendChild(div);
+            }
+        }
+        
+        // Generate a single feature map
+        function generateSingleFeatureMap(canvas, layer, filterIdx) {
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            
+            // Different patterns for different filters
+            const patterns = [
+                (x, y) => Math.sin(x * 0.2) * 127 + 128, // Vertical stripes
+                (x, y) => Math.sin(y * 0.2) * 127 + 128, // Horizontal stripes
+                (x, y) => Math.sin((x + y) * 0.15) * 127 + 128, // Diagonal
+                (x, y) => Math.sin(Math.sqrt(x*x + y*y) * 0.2) * 127 + 128, // Circular
+                (x, y) => ((x ^ y) & 8) ? 255 : 0, // Checkerboard
+                (x, y) => Math.random() * 100 + (Math.abs(x - 32) < 10 ? 155 : 0), // Vertical edge
+                (x, y) => Math.random() * 100 + (Math.abs(y - 32) < 10 ? 155 : 0), // Horizontal edge
+                (x, y) => Math.sqrt((x-32)*(x-32) + (y-32)*(y-32)) < 20 ? 255 : Math.random() * 50, // Blob
+            ];
+            
+            const pattern = patterns[filterIdx % patterns.length];
+            const phaseShift = filterIdx * 0.5;
+            
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    const val = pattern(x + phaseShift, y + phaseShift);
+                    
+                    // Add some noise
+                    const noise = Math.random() * 30;
+                    const finalVal = Math.min(255, Math.max(0, val + noise));
+                    
+                    data[idx] = finalVal;
+                    data[idx + 1] = finalVal;
+                    data[idx + 2] = finalVal;
+                    data[idx + 3] = 255;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        // Initialize comparison view
+        function initComparisonView() {
+            const earlyCanvas = document.getElementById('compareEarly');
+            const deepCanvas = document.getElementById('compareDeep');
+            
+            // Generate early layer (edge detection) view
+            const earlyCtx = earlyCanvas.getContext('2d');
+            generateComparisonImage(earlyCtx, 'early');
+            
+            // Generate deep layer view
+            const deepCtx = deepCanvas.getContext('2d');
+            generateComparisonImage(deepCtx, 'deep');
+            
+            // Initialize blended view
+            updateDepthBlend();
+        }
+        
+        function generateComparisonImage(ctx, type) {
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            
+            // Scale factor to map from 256 to canvas size
+            const scale = 256 / width;
+            
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    const sx = x * scale;
+                    const sy = y * scale;
+                    
+                    if (type === 'early') {
+                        // Edge detection style
+                        const edge = Math.sin(sx * 0.1) * Math.cos(sy * 0.1) * 50 + 
+                                    (Math.random() * 30);
+                        data[idx] = 128 + edge;
+                        data[idx + 1] = 128 + edge * 0.8;
+                        data[idx + 2] = 128 + edge * 0.6;
+                    } else {
+                        // Semantic detection style
+                        let r = 30, g = 30, b = 30;
+                        
+                        // Mine regions (red)
+                        const dist1 = Math.sqrt(Math.pow(sx - 80, 2) + Math.pow(sy - 100, 2));
+                        const dist2 = Math.sqrt(Math.pow(sx - 180, 2) + Math.pow(sy - 80, 2));
+                        if (dist1 < 50) r = 255 * (1 - dist1/50);
+                        if (dist2 < 40) r = Math.max(r, 255 * (1 - dist2/40));
+                        
+                        // Tailings (green)
+                        if (sx > 140 && sx < 210 && sy > 150 && sy < 200) g = 200;
+                        if (sx > 40 && sx < 100 && sy > 170 && sy < 220) g = Math.max(g, 180);
+                        
+                        // Facility (blue)
+                        if (sx > 180 && sx < 240 && sy > 180 && sy < 230) b = 220;
+                        
+                        data[idx] = r;
+                        data[idx + 1] = g;
+                        data[idx + 2] = b;
+                    }
+                    data[idx + 3] = 255;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        function updateDepthBlend() {
+            const slider = document.getElementById('depthSlider');
+            const blend = slider.value / 100;
+            
+            const canvas = document.getElementById('blendedOutput');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    
+                    // Early layer (edge detection)
+                    const edge = Math.sin(x * 0.1) * Math.cos(y * 0.1) * 50 + (Math.random() * 20);
+                    const earlyR = 128 + edge;
+                    const earlyG = 128 + edge * 0.8;
+                    const earlyB = 128 + edge * 0.6;
+                    
+                    // Deep layer (semantic)
+                    let deepR = 30, deepG = 30, deepB = 30;
+                    const dist1 = Math.sqrt(Math.pow(x - 80, 2) + Math.pow(y - 100, 2));
+                    const dist2 = Math.sqrt(Math.pow(x - 180, 2) + Math.pow(y - 80, 2));
+                    if (dist1 < 50) deepR = 255 * (1 - dist1/50);
+                    if (dist2 < 40) deepR = Math.max(deepR, 255 * (1 - dist2/40));
+                    if (x > 140 && x < 210 && y > 150 && y < 200) deepG = 200;
+                    if (x > 40 && x < 100 && y > 170 && y < 220) deepG = Math.max(deepG, 180);
+                    if (x > 180 && x < 240 && y > 180 && y < 230) deepB = 220;
+                    
+                    // Blend
+                    data[idx] = earlyR * (1 - blend) + deepR * blend;
+                    data[idx + 1] = earlyG * (1 - blend) + deepG * blend;
+                    data[idx + 2] = earlyB * (1 - blend) + deepB * blend;
+                    data[idx + 3] = 255;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            
+            document.getElementById('blendCaption').textContent = 
+                `${100 - slider.value}% early layer, ${slider.value}% deep layer`;
+        }
+        
+        // Initialize detection view
+        function initDetectionView() {
+            const inputCanvas = document.getElementById('detectionInput');
+            const outputCanvas = document.getElementById('detectionOutput');
+            
+            // Draw input image
+            const inputCtx = inputCanvas.getContext('2d');
+            drawScaledMiningImage(inputCtx, 300, 300);
+            
+            // Draw output with detections
+            const outputCtx = outputCanvas.getContext('2d');
+            drawScaledMiningImage(outputCtx, 300, 300);
+            drawDetectionBoxes(outputCtx);
+            
+            // Update detection results
+            document.getElementById('detectionResults').innerHTML = `
+                <ul>
+                    <li><strong style="color: #e94560;">Open Pit Mine 1:</strong> Confidence 94.2% - Large circular excavation with concentric terracing</li>
+                    <li><strong style="color: #e94560;">Open Pit Mine 2:</strong> Confidence 91.7% - Secondary pit with active extraction visible</li>
+                    <li><strong style="color: #4ecca3;">Tailings Pond A:</strong> Confidence 88.5% - Rectangular containment with characteristic coloration</li>
+                    <li><strong style="color: #4ecca3;">Tailings Pond B:</strong> Confidence 86.1% - Secondary storage facility</li>
+                    <li><strong style="color: #00adb5;">Processing Facility:</strong> Confidence 92.3% - Geometric structures with regular grid pattern</li>
+                </ul>
+            `;
+        }
+        
+        function drawScaledMiningImage(ctx, width, height) {
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+            const scale = 256 / width;
+            
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const idx = (y * width + x) * 4;
+                    const sx = x * scale;
+                    const sy = y * scale;
+                    
+                    // Recreate the mining image at different scale
+                    let r = 140 + Math.random() * 20;
+                    let g = 120 + Math.random() * 15;
+                    let b = 90 + Math.random() * 15;
+                    
+                    const dist1 = Math.sqrt(Math.pow(sx - 80, 2) + Math.pow(sy - 100, 2));
+                    if (dist1 < 45) {
+                        const depth = 1 - dist1 / 45;
+                        r = 60 + depth * 40;
+                        g = 50 + depth * 30;
+                        b = 45 + depth * 25;
+                    }
+                    
+                    const dist2 = Math.sqrt(Math.pow(sx - 180, 2) + Math.pow(sy - 80, 2));
+                    if (dist2 < 35) {
+                        r = 70 + (1 - dist2/35) * 30;
+                        g = 55 + (1 - dist2/35) * 25;
+                        b = 50;
+                    }
+                    
+                    if (sx > 140 && sx < 210 && sy > 150 && sy < 200) {
+                        r = 100; g = 130; b = 110;
+                    }
+                    if (sx > 40 && sx < 100 && sy > 170 && sy < 220) {
+                        r = 90; g = 120; b = 100;
+                    }
+                    if (sx > 180 && sx < 240 && sy > 180 && sy < 230) {
+                        r = 180; g = 175; b = 170;
+                        if (Math.floor(sx) % 15 < 2 || Math.floor(sy) % 15 < 2) {
+                            r -= 30; g -= 30; b -= 30;
+                        }
+                    }
+                    
+                    data[idx] = r;
+                    data[idx + 1] = g;
+                    data[idx + 2] = b;
+                    data[idx + 3] = 255;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+        
+        function drawDetectionBoxes(ctx) {
+            const scale = 300 / 256;
+            
+            // Detection boxes with labels - updated to match new mine positions
+            const detections = [
+                { x: 40, y: 60, w: 100, h: 100, label: 'Main Pit', color: '#e94560', conf: '94.2%' },
+                { x: 137, y: 57, w: 76, h: 76, label: 'East Pit', color: '#e94560', conf: '91.7%' },
+                { x: 130, y: 155, w: 72, h: 42, label: 'Tailings A', color: '#4ecca3', conf: '88.5%' },
+                { x: 35, y: 165, w: 62, h: 47, label: 'Tailings B', color: '#4ecca3', conf: '86.1%' },
+                { x: 185, y: 185, w: 62, h: 52, label: 'Processing', color: '#00adb5', conf: '92.3%' }
+            ];
+            
+            detections.forEach(det => {
+                const x = det.x * scale;
+                const y = det.y * scale;
+                const w = det.w * scale;
+                const h = det.h * scale;
+                
+                // Box
+                ctx.strokeStyle = det.color;
+                ctx.lineWidth = 3;
+                ctx.strokeRect(x, y, w, h);
+                
+                // Semi-transparent fill
+                ctx.fillStyle = det.color + '33';
+                ctx.fillRect(x, y, w, h);
+                
+                // Label background
+                ctx.fillStyle = det.color;
+                const labelWidth = ctx.measureText(det.label + ' ' + det.conf).width + 10;
+                ctx.fillRect(x, y - 20, Math.max(labelWidth, 70), 18);
+                
+                // Label text
+                ctx.fillStyle = '#fff';
+                ctx.font = '11px Arial';
+                ctx.fillText(det.label + ' ' + det.conf, x + 4, y - 6);
+            });
+        }
+    </script>
+</body>
+</html>
