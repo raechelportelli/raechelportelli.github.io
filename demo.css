@@ -40,7 +40,7 @@
   }
 
   h1 {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Archivo Black", sans-serif;;
     font-weight: 800;
     font-size: clamp(2rem, 4vw, 3.2rem);
     line-height: 1.05;
@@ -53,7 +53,7 @@
   h1 .amp { color: var(--ink-soft); font-weight: 300; }
 
   .subtitle {
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Archivo Black", sans-serif;;
     font-size: 1.1rem;
     color: var(--ink-soft);
     max-width: 65ch;
