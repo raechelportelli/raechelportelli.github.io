@@ -44,37 +44,52 @@
       <li>Projections show a still-young population at 2050, contrasting sharply with Venezuela.</li>
     </ol>
 
-    <h3>Discussion prompts for the pairing</h3>
-    <ol>
-      <li>
-        Both countries sit on the Caribbean rim and share colonial-era histories of plantation economies, yet their
-        pyramids diverge sharply. What does the shape of each pyramid suggest about the different paths their
-        demographic transitions have taken?
-      </li>
-      <li>
-        Where can you see
-        <em>events</em>
-        written into the chart? Compare a slow process (sustained fertility decline) with a sudden shock (an earthquake,
-        an economic collapse, a migration wave).
-      </li>
-      <li>
-        What assumptions go into the UN projections that drive years past 2025? Whose futures get smoothed over when we
-        extrapolate?
-      </li>
-      <li>
-        The pyramid encodes binary sex, five-year age bins, and the nation-state as the unit of analysis. What
-        demographic realities (undocumented migrants, displaced persons, non-binary populations, intra-national
-        inequality) does that frame make harder to see?
-      </li>
-      <li>
-        If you were advising a Ministry of Health or Education in either country in 2030, what would each pyramid tell
-        you to plan for?
-      </li>
-    </ol>
-
-    Data and visualizations from
+    <footer>Data and visualizations from
     <a href="https://www.populationpyramid.net/" target="_blank">populationpyramid.net</a>
     , drawn from the UN World Population Prospects. Released under CC BY 3.0 IGO. Built as a classroom demo for GGIS
-    coursework.
+    coursework. Utilizes Claude Opus 4.7 for HTML structure.</footer>
+    
+    <script>
+  const VEN_SLUG = "venezuela-bolivarian-republic-of";
+  const HAI_SLUG = "haiti";
+
+  const yearInput = document.getElementById("year");
+  const yearDisplay = document.getElementById("yearDisplay");
+  const frameVen = document.getElementById("frameVen");
+  const frameHai = document.getElementById("frameHai");
+  const linkVen = document.getElementById("linkVen");
+  const linkHai = document.getElementById("linkHai");
+  const captionYearVen = document.getElementById("captionYearVen");
+  const captionYearHai = document.getElementById("captionYearHai");
+
+  function update(year) {
+    const venUrl = `https://www.populationpyramid.net/${VEN_SLUG}/${year}/`;
+    const haiUrl = `https://www.populationpyramid.net/${HAI_SLUG}/${year}/`;
+    frameVen.src = venUrl;
+    frameHai.src = haiUrl;
+    linkVen.href = venUrl;
+    linkHai.href = haiUrl;
+    captionYearVen.textContent = year;
+    captionYearHai.textContent = year;
+    yearDisplay.textContent = year;
+
+    document.querySelectorAll(".year-btn").forEach(btn => {
+      btn.classList.toggle("active", parseInt(btn.dataset.year, 10) === year);
+    });
+  }
+
+  yearInput.addEventListener("input", e => {
+    update(parseInt(e.target.value, 10));
+  });
+
+  document.querySelectorAll(".year-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const y = parseInt(btn.dataset.year, 10);
+      yearInput.value = y;
+      update(y);
+    });
+  });
+</script>
+
   </body>
 </html>
