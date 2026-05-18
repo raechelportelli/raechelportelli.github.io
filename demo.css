@@ -1,1 +1,319 @@
+  :root {
+    --paper: #f4efe6;
+    --paper-2: #ebe3d3;
+    --ink: #1a1f2b;
+    --ink-soft: #3a4150;
+    --venezuela: #8a2a2a;
+    --haiti: #1f4f6b;
+    --rule: #b7ac95;
+    --shadow: 0 1px 0 rgba(26, 31, 43, 0.08), 0 8px 24px rgba(26, 31, 43, 0.06);
+  }
 
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(138, 42, 42, 0.04), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(31, 79, 107, 0.05), transparent 50%);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  header {
+    padding: 2.5rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    color: var(--venezuela);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.05;
+    margin: 0 0 0.6rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  h1 .ven { color: var(--venezuela); font-style: italic; font-weight: 400; }
+  h1 .hai { color: var(--haiti); font-style: italic; font-weight: 400; }
+  h1 .amp { color: var(--ink-soft); font-weight: 300; }
+
+  .subtitle {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 65ch;
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    align-items: center;
+  }
+
+  @media (max-width: 720px) {
+    .controls { grid-template-columns: 1fr; }
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  .year-display {
+    font-family: "Fraunces", serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--rule);
+    border: none;
+    border-radius: 3px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+  }
+
+  .year-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .quick-years {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+  .year-btn {
+    padding: 0.3rem 0.7rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .year-btn:hover, .year-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .pyramid-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 880px) {
+    .pyramid-stage { grid-template-columns: 1fr; }
+  }
+
+  .pyramid-frame {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pyramid-caption {
+    padding: 0.85rem 1.1rem;
+    color: var(--paper);
+    font-family: "Fraunces", serif;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .pyramid-frame.venezuela .pyramid-caption { background: var(--venezuela); }
+  .pyramid-frame.haiti .pyramid-caption { background: var(--haiti); }
+
+  .pyramid-caption .place {
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+  }
+  .pyramid-caption .year {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    opacity: 0.85;
+    text-transform: uppercase;
+  }
+
+  .pyramid-iframe {
+    width: 100%;
+    height: 560px;
+    border: none;
+    display: block;
+    background: white;
+  }
+
+  .source-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+  }
+  .source-link a { color: var(--ink); text-decoration: none; }
+  .source-link a:hover { text-decoration: underline; }
+
+  .ornament {
+    text-align: center;
+    color: var(--rule);
+    font-size: 1.4rem;
+    letter-spacing: 1rem;
+    margin: 2rem 0 1rem;
+    padding-left: 1rem;
+  }
+
+  .discussion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 880px) {
+    .discussion { grid-template-columns: 1fr; }
+  }
+
+  .discussion-card {
+    background: white;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .discussion-card.ven { border-left: 4px solid var(--venezuela); }
+  .discussion-card.hai { border-left: 4px solid var(--haiti); }
+
+  .discussion-card h3 {
+    font-family: "Fraunces", serif;
+    font-size: 1.15rem;
+    margin: 0 0 0.6rem 0;
+    font-weight: 600;
+  }
+  .discussion-card h3 .country {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-family: "IBM Plex Sans", sans-serif;
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .discussion-card.ven h3 .country { color: var(--venezuela); }
+  .discussion-card.hai h3 .country { color: var(--haiti); }
+
+  .discussion-card ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .discussion-card ol li { margin-bottom: 0.5rem; }
+
+  .shared-prompts {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: 4px solid var(--ink);
+    border-radius: 4px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 3rem;
+  }
+  .shared-prompts h3 {
+    font-family: "Fraunces", serif;
+    font-size: 1.25rem;
+    margin: 0 0 0.6rem 0;
+    font-weight: 600;
+  }
+  .shared-prompts ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .shared-prompts ol li { margin-bottom: 0.5rem; }
+
+  footer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 3rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--ink); }
