@@ -10,46 +10,108 @@
     <title>Population Pyramids — Venezuela and Haiti</title>
   </head>
   
-  <body>
-    Teaching Demo · Population Geography
-    <h1>Venezuela and Haiti</h1>
-    <p>
-      Two Caribbean-rim nations, two very different demographic stories. Slide through time and watch how political,
-      economic, and migratory forces re-shape an age-sex structure.
-    </p>
+ <body>
 
-    Year 2010 Drag to scrub through time (1950–2100, in 5-year steps) 19501980201020502100 1960 1980 2000 2010 2020 2050
-    2100 Venezuela 2024 Source:
-<iframe src="https://www.populationpyramid.net/embed/population_pyramid/en/world/2010/" width="600" height="500" frameborder="0" scrolling="no" title="Population Pyramid - WORLD 2010" allowfullscreen></iframe>
-<p style="font-size:12px;text-align:center"><a href="https://www.populationpyramid.net/world/2010/" target="_blank">Population Pyramid of WORLD 2010 - PopulationPyramid.net</a></p>
+<header>
+  <div class="eyebrow">Teaching Demo · Population Geography</div>
+  <h1><span class="ven">Venezuela</span> <span class="amp">&amp;</span> <span class="hai">Haiti</span></h1>
+  <p class="subtitle">Two Caribbean-rim nations, two very different demographic stories. Slide through time and watch how political, economic, and migratory forces re-shape an age-sex structure.</p>
+</header>
 
-    Haiti 2024 Source:
-    <a href="https://www.populationpyramid.net/haiti/2024/" target="_blank">populationpyramid.net</a>
+<main>
 
-    <h3>Venezuela · what to watch forAn emptying middle</h3>
+  <section class="controls" aria-label="Year controls">
+    <div class="control-group">
+      <label for="year">Year</label>
+      <div class="year-display" id="yearDisplay">2010</div>
+    </div>
+    <div class="control-group">
+      <label for="year">Drag to scrub through time (1950–2100, in 5-year steps)</label>
+      <input type="range" id="year" min="1950" max="2100" step="5" value="2010">
+      <div class="year-ticks">
+        <span>1950</span><span>1980</span><span>2010</span><span>2050</span><span>2100</span>
+      </div>
+      <div class="quick-years" id="quickYears">
+        <button class="year-btn" data-year="1960">1960</button>
+        <button class="year-btn" data-year="1980">1980</button>
+        <button class="year-btn" data-year="2000">2000</button>
+        <button class="year-btn active" data-year="2010">2010</button>
+        <button class="year-btn" data-year="2020">2020</button>
+        <button class="year-btn" data-year="2050">2050</button>
+        <button class="year-btn" data-year="2100">2100</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pyramid-stage" id="stage">
+    <div class="pyramid-frame venezuela">
+      <div class="pyramid-caption">
+        <span class="place">Venezuela</span>
+        <span class="year" id="captionYearVen">2010</span>
+      </div>
+      <iframe class="pyramid-iframe" id="frameVen"
+              src="https://www.populationpyramid.net/venezuela-bolivarian-republic-of/2010/"
+              title="Population pyramid of Venezuela"
+              loading="lazy"></iframe>
+      <div class="source-link">
+        Source: <a id="linkVen" href="https://www.populationpyramid.net/venezuela-bolivarian-republic-of/2010/" target="_blank" rel="noopener">populationpyramid.net</a>
+      </div>
+    </div>
+
+    <div class="pyramid-frame haiti">
+      <div class="pyramid-caption">
+        <span class="place">Haiti</span>
+        <span class="year" id="captionYearHai">2010</span>
+      </div>
+      <iframe class="pyramid-iframe" id="frameHai"
+              src="https://www.populationpyramid.net/haiti/2010/"
+              title="Population pyramid of Haiti"
+              loading="lazy"></iframe>
+      <div class="source-link">
+        Source: <a id="linkHai" href="https://www.populationpyramid.net/haiti/2010/" target="_blank" rel="noopener">populationpyramid.net</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <section class="discussion">
+    <div class="discussion-card ven">
+      <h3><span class="country">Venezuela · what to watch for</span>An emptying middle</h3>
+      <ol>
+        <li>A narrowing base from the mid-2010s onward as fertility falls.</li>
+        <li>Cohort losses among working-age adults: more than seven million Venezuelans have left the country since 2014.</li>
+        <li>Sex asymmetries in young-adult cohorts that may reflect gendered migration patterns.</li>
+        <li>A pyramid that begins to invert by mid-century in the projections.</li>
+      </ol>
+    </div>
+    <div class="discussion-card hai">
+      <h3><span class="country">Haiti · what to watch for</span>A still-broad base</h3>
+      <ol>
+        <li>A wide base that narrows more slowly than Venezuela's, reflecting persistently higher fertility.</li>
+        <li>The 2010 earthquake cohort: look for a visible dip in the youngest age groups in pyramids from 2015 onward.</li>
+        <li>A thin upper apex shaped by lower life expectancy and out-migration of older adults.</li>
+        <li>Projections show a still-young population at 2050, contrasting sharply with Venezuela.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="shared-prompts">
+    <h3>Discussion prompts for the pairing</h3>
     <ol>
-      <li>A narrowing base from the mid-2010s onward as fertility falls.</li>
-      <li>
-        Cohort losses among working-age adults: more than seven million Venezuelans have left the country since 2014.
-      </li>
-      <li>Sex asymmetries in young-adult cohorts that may reflect gendered migration patterns.</li>
-      <li>A pyramid that begins to invert by mid-century in the projections.</li>
+      <li>Both countries sit on the Caribbean rim and share colonial-era histories of plantation economies, yet their pyramids diverge sharply. What does the shape of each pyramid suggest about the different paths their demographic transitions have taken?</li>
+      <li>Where can you see <em>events</em> written into the chart? Compare a slow process (sustained fertility decline) with a sudden shock (an earthquake, an economic collapse, a migration wave).</li>
+      <li>What assumptions go into the UN projections that drive years past 2025? Whose futures get smoothed over when we extrapolate?</li>
+      <li>The pyramid encodes binary sex, five-year age bins, and the nation-state as the unit of analysis. What demographic realities (undocumented migrants, displaced persons, non-binary populations, intra-national inequality) does that frame make harder to see?</li>
+      <li>If you were advising a Ministry of Health or Education in either country in 2030, what would each pyramid tell you to plan for?</li>
     </ol>
+  </section>
 
-    <h3>Haiti · what to watch forA still-broad base</h3>
-    <ol>
-      <li>A wide base that narrows more slowly than Venezuela's, reflecting persistently higher fertility.</li>
-      <li>
-        The 2010 earthquake cohort: look for a visible dip in the youngest age groups in pyramids from 2015 onward.
-      </li>
-      <li>A thin upper apex shaped by lower life expectancy and out-migration of older adults.</li>
-      <li>Projections show a still-young population at 2050, contrasting sharply with Venezuela.</li>
-    </ol>
+</main>
 
-    <footer>Data and visualizations from
-    <a href="https://www.populationpyramid.net/" target="_blank">populationpyramid.net</a>
-    , drawn from the UN World Population Prospects. Released under CC BY 3.0 IGO. Built as a classroom demo for GGIS
-    coursework. Utilizes Claude Opus 4.7 for HTML structure.</footer>
+<footer>
+  Data and visualizations from <a href="https://www.populationpyramid.net/" target="_blank" rel="noopener">populationpyramid.net</a>, drawn from the UN World Population Prospects. Released under CC BY 3.0 IGO. Built as a classroom demo for GGIS coursework.
+</footer>
     
     <script>
   const VEN_SLUG = "venezuela-bolivarian-republic-of";
